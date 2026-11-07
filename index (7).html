@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  
+  <script>
+    /* A/B del quiz (10/10): esta es la variante v2 (desafiante). Marca al visitante (la marca del Clarity va arriba).
+       La marca viaja al /front y al sck del checkout como 4º segmento del utm_content (ver abBuildFrontUrl). */
+    window.__quizVariant = 'v2';
+    try { document.cookie = 'tdc_quiz=v2;path=/;max-age=2592000;SameSite=Lax'; } catch (e) {}
+  </script>
+
+  
+</head>
+<body>
+
+<!-- ════ TELA 0 — PRUEBA DEL MÚSCULO FANTASMA ════ -->
+<div class="screen active" id="screen-q0">
+  <div class="q0-inner">
+    <div class="expert-hero">
+      <div class="expert-foto-wrap"><img class="expert-foto" src="mariana.webp" alt="Mariana Castillo, fisioterapeuta pélvica" width="112" height="112"><span class="expert-online"></span><span class="expert-selo"></span></div>
+      <div class="expert-nome">Mariana Castillo<span class="verif" aria-hidden="true"></span></div>
+      <div class="expert-cargo">Fisioterapeuta pélvica</div>
+      <div class="expert-prova">+5.000 hombres atendidos en consultorio</div>
+    </div>
+    <h2 class="q-title">LA PRUEBA DEL <em>MÚSCULO FANTASMA</em></h2>
+    <p class="q-sub" style="margin-bottom:0">Descubre en 1 minuto si el tuyo todavía puede reactivarse.</p>
+    <p class="ab-question">¿Tienes más de 40 años?</p>
+    <div class="ab-btns">
+      <button class="btn-cta" onclick="abAnswer(this,'si')">SÍ, tengo más de 40</button>
+      <button class="ab-btn-ghost" onclick="abAnswer(this,'no')">NO, todavía no</button>
+    </div>
+    <div class="intro-badges">
+      <span class="intro-badge">⏱ 1 minuto</span>
+      <span class="intro-badge">🔒 Confidencial</span>
+      <span class="intro-badge">✓ 100% Gratis</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TELA 0 — respuesta sí/no ════
+     Alimenta q_age del quiz y viaja en utm_content (3er segmento) hacia el sck del checkout. -->
+<script>
+  /* 11/10: la respuesta y la variante van en utm_term, nunca en utm_content. Utmify toma el ÚLTIMO segmento del utm_content
+     como id del anuncio: con '|si|v2' al final, todas las ventas caían en anuncios falsos ('si', 'no', 'v1', 'v2'). */
+  var Q0_UTM_KEY = 'utm_term';      /* utm_term = posicionamiento|respuesta[|variante], llega al sck del checkout */
+
+  function abAnswer(btn, answer) {
+    var btns = btn.parentElement.querySelectorAll('button');
+    btns.forEach(function (b) { b.style.pointerEvents = 'none'; });
+    window.__q0Answer = answer;                                         /* 'si' | 'no' */
+    quizState.answers['q_age'] = (answer === 'si') ? '46–55' : '31–45'; /* en-dash, igual a las tarjetas de edad retiradas */
+    trackStep('quiz_age_selected');
+    setTimeout(function () {
+      goTo('screen-q1');
+      btns.forEach(function (b) { b.style.pointerEvents = ''; });
+    }, 300);
+  }
+
+  function abBuildFrontUrl() {
+    try {
+      var answer = window.__q0Answer || 'na';
+      var variant = window.__quizVariant || 'v2';
+      var params = new URLSearchParams(location.search);
+      var cur = params.get(Q0_UTM_KEY);
+      /* nombre|id|respuesta|variante. Utmify usa split("|")[0]/[1]; el 3º y el 4º segmento se ignoran y llegan al sck.
+         Sin utm_content queda "||si|v2", para que la respuesta y la variante sigan en las posiciones 3 y 4. */
+      params.set(Q0_UTM_KEY, (cur ? cur : 'na') + '|' + answer + '|' + variant);   /* posicionamiento|respuesta|variante */
+      return '/front/?' + params.toString();
+    } catch (e) {
+      return '/front/' + (location.search || '');
+    }
+  }
+</script>
+
+<!-- ════ 2/10 — OBJETIVO (v2: 1 toque, con "Más de una opción") ════ -->
+<div class="screen qscreen" id="screen-q1">
+  <div class="q-header">
+    <div class="q-topbar">
+      <button class="back-btn" onclick="goTo('screen-q0')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="expert-mini"><img class="expert-mini-foto" src="mariana.webp" alt="Mariana Castillo" width="38" height="38"><div class="expert-mini-txt"><span class="expert-mini-nome">Mariana Castillo<span class="verif" aria-hidden="true"></span></span><span class="expert-mini-cargo">Fisioterapeuta pélvica</span></div></div>
+      <span class="step-num">2/10</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" data-target="12%"></div></div>
+  </div>
+  <div class="q-body">
+    <h2 class="q-title">¿Cuál es tu objetivo principal?</h2>
+    <p class="q-sub">Toca la que más te importa:</p>
+    <div class="options">
+      <div class="option-card" onclick="answerSingle(this,'screen-q2','q1')">
+        <span class="opt-label">💪 Volver a estar firme de verdad</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q2','q1')">
+        <span class="opt-label">⏱️ Durar más sin perder el control</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q2','q1')">
+        <span class="opt-label">🔄 Estar listo para una segunda ronda</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q2','q1')">
+        <span class="opt-label">🧠 Recuperar la confianza en mí mismo</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q2','q1')">
+        <span class="opt-label">➕ Más de una opción</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ 3/10 — DURACIÓN (v2: sin la respuesta de Mariana) ════ -->
+<div class="screen qscreen" id="screen-q2">
+  <div class="q-header">
+    <div class="q-topbar">
+      <button class="back-btn" onclick="goTo('screen-q1')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="expert-mini"><img class="expert-mini-foto" src="mariana.webp" alt="Mariana Castillo" width="38" height="38"><div class="expert-mini-txt"><span class="expert-mini-nome">Mariana Castillo<span class="verif" aria-hidden="true"></span></span><span class="expert-mini-cargo">Fisioterapeuta pélvica</span></div></div>
+      <span class="step-num">3/10</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" data-target="25%"></div></div>
+  </div>
+  <div class="q-body">
+    <h2 class="q-title">¿Cuánto tiempo logras mantener la firmeza en promedio?</h2>
+    <p class="q-sub"></p>
+    <div class="options">
+      <div class="option-card" onclick="answerSingle(this,'screen-q4','q2')">
+        <span class="opt-label">😔 Menos de 2 minutos</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q4','q2')">
+        <span class="opt-label">😐 De 2 a 7 minutos</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q4','q2')">
+        <span class="opt-label">🙂 De 7 a 15 minutos</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q4','q2')">
+        <span class="opt-label">😎 Más de 15 minutos</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ 4/10 — ERECCIÓN (v2: sin la respuesta de Mariana) ════ -->
+<div class="screen qscreen" id="screen-q4">
+  <div class="q-header">
+    <div class="q-topbar">
+      <button class="back-btn" onclick="goTo('screen-q2')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="expert-mini"><img class="expert-mini-foto" src="mariana.webp" alt="Mariana Castillo" width="38" height="38"><div class="expert-mini-txt"><span class="expert-mini-nome">Mariana Castillo<span class="verif" aria-hidden="true"></span></span><span class="expert-mini-cargo">Fisioterapeuta pélvica</span></div></div>
+      <span class="step-num">4/10</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" data-target="38%"></div></div>
+  </div>
+  <div class="q-body">
+    <h2 class="q-title">¿Logras mantener una erección completa durante el sexo?</h2>
+    <p class="q-sub"></p>
+    <div class="options">
+      <div class="option-card" onclick="answerSingle(this,'screen-q6','q4')">
+        <span class="opt-label">😔 Casi nunca</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q6','q4')">
+        <span class="opt-label">😐 A veces sí, a veces no</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q6','q4')">
+        <span class="opt-label">🙂 Sí, pero quiero mejorar</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q6','q4')">
+        <span class="opt-label">😎 Sí, sin problemas</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ 5/10 — SOLUCIONES (v2: sin la respuesta de Mariana; quien probó algo sigue a TENTATIVAS) ════ -->
+<div class="screen qscreen" id="screen-q6">
+  <div class="q-header">
+    <div class="q-topbar">
+      <button class="back-btn" onclick="goTo('screen-q4')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="expert-mini"><img class="expert-mini-foto" src="mariana.webp" alt="Mariana Castillo" width="38" height="38"><div class="expert-mini-txt"><span class="expert-mini-nome">Mariana Castillo<span class="verif" aria-hidden="true"></span></span><span class="expert-mini-cargo">Fisioterapeuta pélvica</span></div></div>
+      <span class="step-num">5/10</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" data-target="50%"></div></div>
+  </div>
+  <div class="q-body">
+    <h2 class="q-title">¿Has intentado alguna solución para mejorar tu rendimiento íntimo?</h2>
+    <p class="q-sub"></p>
+    <div class="options">
+      <div class="option-card" onclick="answerQ6(this,true)">
+        <span class="opt-label">💊 Sí, uso o usé medicamentos regularmente</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerQ6(this,true)">
+        <span class="opt-label">🧪 Sí, los probé ocasionalmente</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerQ6(this,false)">
+        <span class="opt-label">❌ No, nunca intenté nada</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerQ6(this,false)">
+        <span class="opt-label">🤫 Prefiero no responder</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ 6/10 — TENTATIVAS (nueva en la v2; solo para quien ya probó algo en la 5/10) ════ -->
+<div class="screen qscreen" id="screen-tentativas">
+  <div class="q-header">
+    <div class="q-topbar">
+      <button class="back-btn" onclick="goTo('screen-q6')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="expert-mini"><img class="expert-mini-foto" src="mariana.webp" alt="Mariana Castillo" width="38" height="38"><div class="expert-mini-txt"><span class="expert-mini-nome">Mariana Castillo<span class="verif" aria-hidden="true"></span></span><span class="expert-mini-cargo">Fisioterapeuta pélvica</span></div></div>
+      <span class="step-num">6/10</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" data-target="62%"></div></div>
+  </div>
+  <div class="q-body">
+    <h2 class="q-title">¿Cuántas veces ya intentaste resolver esto?</h2>
+    <p class="q-sub">Pastillas, remedios, médico, gimnasio…</p>
+    <div class="options">
+      <div class="option-card" onclick="answerSingle(this,'screen-insight3','tentativas')">
+        <span class="opt-label">😩 Muchas veces, y nada funcionó</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-insight3','tentativas')">
+        <span class="opt-label">😐 Unas 2 o 3 veces</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-insight3','tentativas')">
+        <span class="opt-label">🤔 Solo una vez</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ 7/10 — INSIGHT 3 — TABELA (igual al control) ════ -->
+<div class="screen qscreen insight-bg" id="screen-insight3">
+  <div class="q-header">
+    <div class="q-topbar">
+      <button class="back-btn" onclick="goBackFromInsight3()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="expert-mini"><img class="expert-mini-foto" src="mariana.webp" alt="Mariana Castillo" width="38" height="38"><div class="expert-mini-txt"><span class="expert-mini-nome">Mariana Castillo<span class="verif" aria-hidden="true"></span></span><span class="expert-mini-cargo">Fisioterapeuta pélvica</span></div></div>
+      <span class="step-num">7/10</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" data-target="70%"></div></div>
+  </div>
+  <div class="q-body has-footer">
+    <div class="insight-tag">⚖️ Comparación</div>
+    <h2 class="q-title">El Truco del Camerino supera a los medicamentos</h2>
+    <p class="q-sub">Las ventajas de un enfoque natural y permanente</p>
+    <div class="insight-card">
+      <table class="cmp-table">
+        <thead><tr><th></th><th>Medicamentos</th><th class="th-red">Truco del Camerino</th></tr></thead>
+        <tbody>
+          <tr><td>Firmeza inmediata</td><td><span class="ico-yes">✓</span></td><td><span class="ico-yes">✓</span></td></tr>
+          <tr><td>Mejora la erección</td><td><span class="ico-yes">✓</span></td><td><span class="ico-yes">✓</span></td></tr>
+          <tr><td>Resultados permanentes</td><td><span class="ico-no">✕</span></td><td><span class="ico-yes">✓</span></td></tr>
+          <tr><td>Sin efectos secundarios</td><td><span class="ico-no">✕</span></td><td><span class="ico-yes">✓</span></td></tr>
+          <tr><td>Aumenta la confianza</td><td><span class="ico-no">✕</span></td><td><span class="ico-yes">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="q-footer"><button class="btn-cta" onclick="goTo('screen-q8')">CONTINUAR →</button></div>
+</div>
+
+<!-- ════ 8/10 — PAREJA (v2: sin la respuesta de Mariana) ════ -->
+<div class="screen qscreen" id="screen-q8">
+  <div class="q-header">
+    <div class="q-topbar">
+      <button class="back-btn" onclick="goTo('screen-insight3')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="expert-mini"><img class="expert-mini-foto" src="mariana.webp" alt="Mariana Castillo" width="38" height="38"><div class="expert-mini-txt"><span class="expert-mini-nome">Mariana Castillo<span class="verif" aria-hidden="true"></span></span><span class="expert-mini-cargo">Fisioterapeuta pélvica</span></div></div>
+      <span class="step-num">8/10</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" data-target="80%"></div></div>
+  </div>
+  <div class="q-body">
+    <h2 class="q-title">¿Sientes que tu pareja queda insatisfecha después de la intimidad?</h2>
+    <p class="q-sub"></p>
+    <div class="options">
+      <div class="option-card" onclick="answerSingle(this,'screen-q9','q8')">
+        <span class="opt-label">😔 Sí, creo que sí</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q9','q8')">
+        <span class="opt-label">😐 A veces</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q9','q8')">
+        <span class="opt-label">🤔 No estoy seguro</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q9','q8')">
+        <span class="opt-label">🙂 Con seguridad no</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+      <div class="option-card" onclick="answerSingle(this,'screen-q9','q8')">
+        <span class="opt-label">😎 Soltero</span><span class="opt-radio"><span class="opt-radio-dot"></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ 9/10 — DIAGNÓSTICO (puntaje con q2, q4 y q8) ════ -->
+<div class="screen qscreen insight-bg" id="screen-q9">
+  <div class="q-header">
+    <div class="q-topbar">
+      <button class="back-btn" onclick="goTo('screen-q8')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="expert-mini"><img class="expert-mini-foto" src="mariana.webp" alt="Mariana Castillo" width="38" height="38"><div class="expert-mini-txt"><span class="expert-mini-nome">Mariana Castillo<span class="verif" aria-hidden="true"></span></span><span class="expert-mini-cargo">Fisioterapeuta pélvica</span></div></div>
+      <span class="step-num">9/10</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" data-target="90%"></div></div>
+  </div>
+  <div class="q-body has-footer">
+    <div class="insight-tag">📋 Resumen de tu perfil</div>
+    <h2 class="q-title" style="margin-bottom:6px">Nivel de rendimiento sexual</h2>
+    <div class="diag-slider-wrap">
+      <div class="diag-slider-track">
+        <div class="diag-slider-thumb" id="diag-thumb">
+          <div class="diag-thumb-label" id="diag-label">Tú – 17</div>
+        </div>
+      </div>
+      <div class="diag-ticks"><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span></div>
+      <div class="diag-labels"><span class="lbl-low">Bajo</span><span>Medio</span><span>Alto</span></div>
+    </div>
+    <div class="diag-alert">
+      <div class="diag-alert-icon">⚠️</div>
+      <div>
+        <div class="diag-alert-title">Nivel de rendimiento bajo</div>
+        <div class="diag-alert-text">Un bajo nivel de rendimiento sexual puede causar pérdida de deseo, miedo al rechazo, distanciamiento emocional y baja confianza masculina.</div>
+      </div>
+    </div>
+    <div class="diag-list">
+      <div class="diag-item"><div class="diag-item-left"><div class="diag-dot dd-red"></div>Control de eyaculación</div><div class="diag-status ds-red">Bajo</div></div>
+      <div class="diag-item"><div class="diag-item-left"><div class="diag-dot dd-red"></div>Duración</div><div class="diag-status ds-red">Reducida</div></div>
+      <div class="diag-item"><div class="diag-item-left"><div class="diag-dot dd-red"></div>Función eréctil</div><div class="diag-status ds-red">Débil</div></div>
+      <div class="diag-item"><div class="diag-item-left"><div class="diag-dot dd-orange"></div>Musculatura pélvica</div><div class="diag-status ds-orange">Necesita activación</div></div>
+      <div class="diag-item"><div class="diag-item-left"><div class="diag-dot dd-red"></div>Confianza íntima</div><div class="diag-status ds-red">Afectada</div></div>
+    </div>
+  </div>
+  <div class="q-footer"><button class="btn-cta" onclick="goTo('screen-loading')">CONTINUAR →</button></div>
+</div>
+
+<!-- ════ 10/10 — LOADING (v2: 5 s en vez de 10 s; la fecha del plan pasa al cuadro final) ════ -->
+<div class="screen" id="screen-loading">
+  <div class="loading-brand">El Truco del Camerino<div class="loading-brand-bar"></div></div>
+  <div class="loading-ring-wrap">
+    <svg class="loading-ring-svg" viewBox="0 0 120 120">
+      <circle class="loading-ring-bg" cx="60" cy="60" r="52"/>
+      <circle class="loading-ring-fill" id="loading-ring" cx="60" cy="60" r="52"/>
+    </svg>
+    <div class="loading-ring-center">
+      <div class="loading-ring-pct" id="loading-pct">0%</div>
+      <div class="loading-ring-lbl">completado</div>
+    </div>
+  </div>
+  <div class="loading-msg-wrap">
+    <div class="loading-msg-main" id="loading-msg-main">Analizando tus respuestas...</div>
+    <div class="loading-msg-sub" id="loading-msg-sub">Procesando tu perfil único</div>
+  </div>
+  <div class="loading-social"><strong>+5.000 hombres</strong><br>ya activaron El Músculo Fantasma</div>
+  <div class="loading-testimonials">
+    <div class="loading-testimonials-inner">
+      <div class="testi-card">
+        <div class="testi-head"><div class="testi-avatar"><img src="testi-ricardo.webp" alt="Ricardo C."></div><div><div class="testi-info-name">Ricardo C.</div><div class="testi-info-meta">52 años · México</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Los cambios desde la primera semana me sorprendieron por completo. Me alegra haber continuado."</div>
+        <div class="testi-verified">✔ Verificado</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-head"><div class="testi-avatar"><img src="testi-antonio.webp" alt="Antonio R."></div><div><div class="testi-info-name">Antonio R.</div><div class="testi-info-meta">47 años · Colombia</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Después de años buscando soluciones, este fue lo único que me dio resultados reales."</div>
+        <div class="testi-verified">✔ Verificado</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-head"><div class="testi-avatar"><img src="testi-joaquin.webp" alt="Joaquín S."></div><div><div class="testi-info-name">Joaquín S.</div><div class="testi-info-meta">58 años · Argentina</div></div></div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"En 21 días sentí algo que no recordaba desde hace años. Mi pareja también notó la diferencia."</div>
+        <div class="testi-verified">✔ Verificado</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA — aparece após modal 2 confirmado -->
+  <div id="loading-cta">
+    <div style="background:#fff;border:1.5px solid #B9DAC6;border-radius:14px;padding:18px 20px;width:100%;text-align:center;box-shadow:0 4px 16px rgba(47,118,80,.08)">
+      <p style="font-size:15px;font-weight:700;color:#18201B;line-height:1.6;margin-bottom:4px">¡Tu plan está listo!</p>
+      <p style="font-size:13px;color:#4A5550;line-height:1.7;margin-bottom:6px">Con base en tus respuestas, esperamos que alcances tu máximo rendimiento el <strong style="color:#2F7650" id="proj-date">—</strong>.</p>
+      <p style="font-size:13px;color:#4A5550;line-height:1.7">Mariana te explicará <strong style="color:#18201B">todo sobre el método personalizado</strong> en el siguiente video.</p>
+    </div>
+    <button class="btn-cta" onclick="trackStep('quiz_completed'); trackStep('quiz_ab_' + (window.__quizVariant || 'v2') + '_fin'); setTimeout(function(){ window.location.href = (typeof abBuildFrontUrl === 'function') ? abBuildFrontUrl() : '/front/' + (location.search || '') }, 200)" style="width:100%;max-width:400px">VER MI PLAN AHORA →</button>
+    <p style="font-size:11px;color:#646F69;text-align:center">🔒 Acceso seguro · Contenido 100% privado</p>
+  </div>
+</div>
+
+<!-- ════ EXIT MODAL ════ -->
+<div class="exit-overlay" id="exit-overlay">
+  <div class="exit-card">
+    <div id="exit-step1">
+      <div class="exit-icon">⚠️</div>
+      <h3 class="exit-title">¿Quieres abandonar lo que empezaste?</h3>
+      <p class="exit-sub">Tu plan personalizado está siendo creado ahora mismo.</p>
+      <button class="exit-btn-primary" onclick="closeExitModal()">SEGUIR ADELANTE →</button>
+      <button class="exit-btn-secondary" onclick="showExitStep2()">Salir</button>
+    </div>
+    <div id="exit-step2" style="display:none">
+      <div class="exit-icon">😔</div>
+      <h3 class="exit-title">¿Seguro? Hombres como tú ya están recuperando lo que perdieron.</h3>
+      <p class="exit-sub">Solo te faltan unos minutos para completar tu perfil.</p>
+      <button class="exit-btn-primary" onclick="closeExitModal()">NO, CONTINUAR →</button>
+      <button class="exit-btn-secondary" onclick="confirmLeave()">Sí, salir</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SCRIPTS ════ -->
+<script>
+  var quizState = { answers: {} };
+  var loadingInterval = null;
+  var loadingPct = 0;
+
+  /* ═══ Tracking de etapas (Clarity + Meta Pixel) — mede perda por tela ═══ */
+  const stepsFired = new Set();
+
+  /* El pixel carga async (Utmify). Un evento que llega antes del fbq entra en la fila y sale cuando el pixel
+     carga (espera hasta 20 s). Antes se perdía: quien tocaba la edad rápido no contaba en la edad ni en la q1. */
+  const fbqFila = [];
+  let fbqEsperando = false;
+  function fbqEnviar(stepName, eventId) {
+    if (typeof fbq === "function") { fbq("trackCustom", stepName, {}, {eventID: eventId}); return; }
+    fbqFila.push([stepName, eventId]);
+    if (fbqEsperando) return;
+    fbqEsperando = true;
+    let n = 0;
+    (function vacia() {
+      if (typeof fbq === "function") {
+        while (fbqFila.length) { const e = fbqFila.shift(); fbq("trackCustom", e[0], {}, {eventID: e[1]}); }
+        fbqEsperando = false;
+      } else if (n++ < 80) setTimeout(vacia, 250);
+      else { fbqFila.length = 0; fbqEsperando = false; }
+    })();
+  }
+
+  function trackStep(stepName) {
+    if (stepsFired.has(stepName)) return;
+    stepsFired.add(stepName);
+    const eventId = stepName + "_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
+    if (typeof clarity === "function") clarity("event", stepName);
+    fbqEnviar(stepName, eventId);
+  }
+
+  /* ═══ Tag de campanha no Clarity — lê utm_campaign da URL ═══ */
+  const utmCampaign = new URLSearchParams(location.search).get("utm_campaign");
+  if (utmCampaign && typeof clarity === "function") {
+    clarity("set", "campanha", utmCampaign.split("|")[1] || utmCampaign);
+  }
+
+  function goTo(id) {
+    var cur = document.querySelector('.screen.active');
+    if (cur) cur.classList.remove('active');
+    var next = document.getElementById(id);
+    if (!next) return;
+    next.classList.add('active');
+    trackStep("quiz_step_" + id.replace('screen-', ''));
+    next.querySelectorAll('.option-card, .option-grid-card').forEach(function(c) {
+      c.style.pointerEvents = '';
+    });
+    var fill = next.querySelector('.progress-fill');
+    if (fill) {
+      var target = fill.getAttribute('data-target') || '0%';
+      fill.style.transition = 'none'; fill.style.width = '0%';
+      requestAnimationFrame(function() { requestAnimationFrame(function() {
+        fill.style.transition = 'width .4s cubic-bezier(.4,0,.2,1)';
+        fill.style.width = target;
+      }); });
+    }
+    if (id === 'screen-loading') { updateProjDate(); startLoading(); }
+    if (id === 'screen-q9') updateDiagSlider();
+    window.scrollTo(0, 0);
+  }
+
+  function answerSingle(el, nextScreen, qKey) {
+    var parent = el.closest('.options, .options-grid');
+    if (!parent) return;
+    parent.querySelectorAll('.option-card, .option-grid-card').forEach(function(c) {
+      c.style.pointerEvents = 'none'; c.classList.remove('selected');
+    });
+    el.classList.add('selected');
+    var label = el.querySelector('.opt-label, .grid-age-label');
+    if (label) quizState.answers[qKey] = label.textContent.trim();
+    if (qKey === 'q_age') trackStep("quiz_age_selected");
+    setTimeout(function() { goTo(nextScreen); }, 300);
+  }
+
+  /* 5/10 (soluciones): quien ya probó algo pasa por la pregunta nueva de TENTATIVAS;
+     "No, nunca intenté nada" y "Prefiero no responder" la saltan y van directo a la tabla. */
+  function answerQ6(el, probo) {
+    quizState.skipTentativas = !probo;
+    if (!probo) delete quizState.answers['tentativas'];
+    answerSingle(el, probo ? 'screen-tentativas' : 'screen-insight3', 'q6');
+  }
+  function goBackFromInsight3() {
+    goTo(quizState.skipTentativas ? 'screen-q6' : 'screen-tentativas');
+  }
+
+  /* Slider dinâmico */
+  function calcScore() {
+    var score = 17;
+    var q2 = quizState.answers['q2'] || '';
+    var q4 = quizState.answers['q4'] || '';
+    var q8 = quizState.answers['q8'] || '';   /* v2: q7 salió; la pareja (q8) entra en su lugar */
+    if (q2.indexOf('Menos de 2') !== -1) score -= 5;
+    else if (q2.indexOf('2 a 7') !== -1) score -= 2;
+    else if (q2.indexOf('7 a 15') !== -1) score += 2;
+    else if (q2.indexOf('Más de 15') !== -1) score += 5;
+    if (q4.indexOf('Casi nunca') !== -1) score -= 5;
+    else if (q4.indexOf('A veces sí') !== -1) score -= 2;
+    else if (q4.indexOf('quiero mejorar') !== -1) score += 2;
+    else if (q4.indexOf('sin problemas') !== -1) score += 5;
+    if (q8.indexOf('Sí, creo que sí') !== -1) score -= 5;
+    else if (q8.indexOf('A veces') !== -1) score -= 2;
+    else if (q8.indexOf('Con seguridad no') !== -1) score += 3;
+    return Math.min(35, Math.max(12, score));
+  }
+
+  function updateDiagSlider() {
+    var score = calcScore();
+    var pct = (score - 10) / 40 * 100;
+    var thumb = document.getElementById('diag-thumb');
+    var label = document.getElementById('diag-label');
+    if (thumb) thumb.style.left = pct + '%';
+    if (label) label.textContent = 'Tú – ' + score;
+  }
+
+  /* Fecha proyectada = hoy + 21 días (antes era fija: "Julio, 2026") */
+  function updateProjDate() {
+    var meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    var d = new Date(Date.now() + 21 * 864e5);
+    var el = document.getElementById('proj-date');
+    if (el) el.textContent = d.getDate() + ' de ' + meses[d.getMonth()] + ', ' + d.getFullYear();
+  }
+
+  /* Loading */
+  function startLoading() {
+    var ring = document.getElementById('loading-ring');
+    var pctEl = document.getElementById('loading-pct');
+    var msgMain = document.getElementById('loading-msg-main');
+    var msgSub = document.getElementById('loading-msg-sub');
+    var circ = 326.73;
+    var msgs = [
+      ['Analizando tus respuestas...', 'Procesando tu perfil único'],
+      ['Identificando tu perfil muscular...', 'Comparando con +5.000 casos similares'],
+      ['Calculando tu nivel de activación...', 'Midiendo el estado del Músculo Fantasma'],
+      ['Preparando tu plan personalizado de 21 días...', '¡Tu plan está tomando forma!']
+    ];
+    loadingPct = 0;
+    ring.style.strokeDashoffset = circ;
+    pctEl.textContent = '0%';
+    msgMain.textContent = msgs[0][0]; msgSub.textContent = msgs[0][1];
+
+    loadingInterval = setInterval(function() {
+      loadingPct += 2;   /* v2: 5 s en vez de 10 s */
+      var idx = Math.min(Math.floor(loadingPct / 26), msgs.length - 1);
+      var prev = Math.min(Math.floor((loadingPct - 2) / 26), msgs.length - 1);
+      if (idx !== prev) {
+        msgMain.style.opacity = '0'; msgSub.style.opacity = '0';
+        setTimeout(function() { msgMain.textContent = msgs[idx][0]; msgSub.textContent = msgs[idx][1]; msgMain.style.opacity = '1'; msgSub.style.opacity = '1'; }, 300);
+      }
+      ring.style.strokeDashoffset = circ * (1 - loadingPct / 100);
+      pctEl.textContent = loadingPct + '%';
+      if (loadingPct >= 100) {
+        clearInterval(loadingInterval); loadingInterval = null;
+        setTimeout(showLoadingCTA, 300);
+      }
+    }, 100);
+  }
+
+  function showLoadingCTA() {
+    var cta = document.getElementById('loading-cta');
+    if (cta) {
+      cta.classList.add('show');
+      setTimeout(function() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }, 100);
+    }
+  }
+
+  /* Retoma o loading se o browser pausou o intervalo ao sair e voltar */
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+      var screen = document.getElementById('screen-loading');
+      if (screen && screen.classList.contains('active') && loadingInterval === null && loadingPct < 100) {
+        var ring = document.getElementById('loading-ring');
+        var pctEl = document.getElementById('loading-pct');
+        var msgMain = document.getElementById('loading-msg-main');
+        var msgSub = document.getElementById('loading-msg-sub');
+        var circ = 326.73;
+        var msgs = [
+          ['Analizando tus respuestas...', 'Procesando tu perfil único'],
+          ['Identificando tu perfil muscular...', 'Comparando con +5.000 casos similares'],
+          ['Calculando tu nivel de activación...', 'Midiendo el estado del Músculo Fantasma'],
+          ['Preparando tu plan personalizado de 21 días...', '¡Tu plan está tomando forma!']
+        ];
+        loadingInterval = setInterval(function() {
+          loadingPct += 2;
+          var idx = Math.min(Math.floor(loadingPct / 26), msgs.length - 1);
+          var prev = Math.min(Math.floor((loadingPct - 2) / 26), msgs.length - 1);
+          if (idx !== prev) {
+            msgMain.style.opacity = '0'; msgSub.style.opacity = '0';
+            setTimeout(function() { msgMain.textContent = msgs[idx][0]; msgSub.textContent = msgs[idx][1]; msgMain.style.opacity = '1'; msgSub.style.opacity = '1'; }, 300);
+          }
+          ring.style.strokeDashoffset = circ * (1 - loadingPct / 100);
+          pctEl.textContent = loadingPct + '%';
+          if (loadingPct >= 100) {
+            clearInterval(loadingInterval); loadingInterval = null;
+            setTimeout(showLoadingCTA, 300);
+          }
+        }, 100);
+      }
+    }
+  });
+
+  /* Exit intent */
+  var exitModalActive = false, allowLeave = false;
+  history.pushState(null, '', window.location.href);
+  window.addEventListener('popstate', function() {
+    if (allowLeave) return;
+    history.pushState(null, '', window.location.href);
+    if (!exitModalActive) showExitModal();
+  });
+  function showExitModal() {
+    exitModalActive = true;
+    document.getElementById('exit-step1').style.display = '';
+    document.getElementById('exit-step2').style.display = 'none';
+    document.getElementById('exit-overlay').classList.add('show');
+  }
+  function closeExitModal() {
+    document.getElementById('exit-overlay').classList.remove('show');
+    exitModalActive = false;
+  }
+  function showExitStep2() {
+    document.getElementById('exit-step1').style.display = 'none';
+    document.getElementById('exit-step2').style.display = '';
+  }
+  function confirmLeave() {
+    allowLeave = true;
+    document.getElementById('exit-overlay').classList.remove('show');
+    exitModalActive = false;
+    /* v2: el referrer de aquí es el /quiz/ que sorteó; para salir de verdad usa el referrer original */
+    var ref = document.referrer;
+    try { if (!ref || ref.indexOf(location.host) !== -1) ref = sessionStorage.getItem('tdc_quiz_ref') || ''; } catch (e) {}
+    if (ref) window.location.href = ref;
+  }
+
+  /* Al abrir: la 1ª pantalla (quiz_step_q0, mismo nombre en las dos variantes) y la entrada del A/B
+     (quiz_ab_v1_entrada / quiz_ab_v2_entrada). Espera hasta 10 s a que el pixel cargue; si no carga, van solo al Clarity. */
+  (function () {
+    var ev = 'quiz_ab_' + (window.__quizVariant || 'v2') + '_entrada', n = 0;
+    (function intenta() {
+      if (typeof fbq === 'function' || n++ >= 40) { trackStep('quiz_step_q0'); trackStep(ev); } else setTimeout(intenta, 250);
+    })();
+  })();
+</script>
+</body>
+</html>

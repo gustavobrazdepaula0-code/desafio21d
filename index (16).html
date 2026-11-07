@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Protocolo 21D — Ejercicios Simples en Casa para Hombres 45+</title>
+<meta name="description" content="Programa de 21 días con ejercicios suaves para hacer en casa, sin equipos. Más energía, movilidad y mejor descanso para hombres a partir de los 45.">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Clarity -->
+
+
+<!-- UTMify -->
+
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background: #f7f9fb;
+  color: #3d4d5c;
+  line-height: 1.7;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+h1, h2, h3 {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  color: #12314f;
+  line-height: 1.25;
+}
+
+.topbar {
+  background: #12314f;
+  color: #fff;
+  text-align: center;
+  padding: 12px 16px;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 3px;
+}
+
+.sec { padding: 56px 0; }
+.sec--white { background: #fff; }
+
+.sec-title {
+  font-size: clamp(22px, 4.5vw, 30px);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: block;
+  color: #1d4e79;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* Hero */
+.hero { padding: 48px 0 56px; text-align: center; }
+.hero h1 {
+  font-size: clamp(28px, 6vw, 42px);
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+.hero .sub {
+  font-size: 18px;
+  max-width: 640px;
+  margin: 0 auto 28px;
+}
+.hero-img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(18,49,79,.12);
+  margin: 0 auto 32px;
+}
+
+/* Botón CTA */
+.btn-cta {
+  display: block;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 19px 32px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff8c1a, #f2790f);
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 8px 26px rgba(242,121,15,.38);
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(242,121,15,.45);
+  filter: brightness(.96);
+}
+.btn-cta:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 18px rgba(242,121,15,.35);
+}
+.cta-sub {
+  text-align: center;
+  font-size: 13px;
+  color: #7d8b99;
+  margin-top: 12px;
+}
+
+.trust-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-top: 28px;
+}
+.trust-row span { font-size: 15px; font-weight: 600; color: #12314f; }
+.trust-row span::before { content: "✓ "; color: #2e7d32; font-weight: 700; }
+
+/* Cards */
+.card {
+  background: #fff;
+  border: 1px solid #e3e9f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(18,49,79,.06);
+  padding: 28px;
+}
+.card h3 { font-size: 19px; margin-bottom: 8px; }
+.card p { font-size: 15.5px; }
+
+/* Problema */
+.pain-list { list-style: none; }
+.pain-list li {
+  padding: 10px 0 10px 28px;
+  position: relative;
+  border-bottom: 1px solid #eef2f6;
+}
+.pain-list li:last-child { border-bottom: none; }
+.pain-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: #1d4e79;
+  font-weight: 700;
+}
+.closer { text-align: center; margin-top: 26px; }
+.closer strong { color: #12314f; }
+
+/* Método */
+.sec-img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(18,49,79,.10);
+  margin-bottom: 28px;
+}
+.prose p { margin-bottom: 18px; }
+.author-note {
+  border-left: 4px solid #1d4e79;
+  background: #fff;
+  padding: 16px 20px;
+  border-radius: 0 12px 12px 0;
+  font-size: 15px;
+  box-shadow: 0 3px 12px rgba(18,49,79,.05);
+}
+.author-note strong { color: #12314f; }
+
+/* Beneficios */
+.benefits-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.benefit {
+  background: #fff;
+  border: 1px solid #e3e9f0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  box-shadow: 0 3px 12px rgba(18,49,79,.05);
+}
+.benefit .check {
+  flex: 0 0 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #e6f2e7;
+  color: #2e7d32;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.benefit p { font-size: 16px; }
+
+/* Fases */
+.phases-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+.phase {
+  background: #fff;
+  border: 1px solid #e3e9f0;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 18px rgba(18,49,79,.06);
+}
+.phase .num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #12314f;
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.phase .days {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #1d4e79;
+  margin-bottom: 6px;
+}
+.phase h3 { font-size: 19px; margin-bottom: 8px; }
+.phase p { font-size: 15px; }
+
+/* Incluido */
+.include-list { display: grid; gap: 16px; }
+.include-main { border: 2px solid #1d4e79; }
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-bottom: 12px;
+}
+.tag--main { background: #1d4e79; color: #fff; }
+.tag--bonus { background: #fdeedd; color: #b35a06; }
+
+/* Testimonios */
+.testi-grid { display: grid; gap: 16px; }
+.testi .quote { font-style: italic; margin-bottom: 16px; }
+.testi .who { display: flex; align-items: center; gap: 12px; }
+.testi .avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #12314f;
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.testi .who strong { color: #12314f; font-size: 15px; display: block; line-height: 1.3; }
+.testi .who span { font-size: 13px; color: #7d8b99; }
+
+/* Garantía */
+.guarantee { border: 2px solid #2e7d32; text-align: center; }
+.guarantee .shield {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #e6f2e7;
+  color: #2e7d32;
+  font-size: 26px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.guarantee h2 { margin-bottom: 12px; font-size: clamp(20px, 4vw, 26px); }
+.guarantee p { font-size: 16px; }
+.cta-block { margin-top: 36px; }
+
+/* FAQ */
+.faq details {
+  background: #fff;
+  border: 1px solid #e3e9f0;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.faq summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 48px 18px 20px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #12314f;
+  position: relative;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: #1d4e79;
+  font-weight: 400;
+}
+.faq details[open] summary::after { content: "–"; }
+.faq .answer { padding: 0 20px 18px; font-size: 15px; }
+
+/* CTA final */
+.final { background: #12314f; padding: 64px 0; text-align: center; }
+.final h2 { color: #fff; font-size: clamp(24px, 5vw, 34px); margin-bottom: 14px; }
+.final > .wrap > p { color: #b9c9d9; margin-bottom: 28px; }
+.final-img {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 16px;
+  margin: 0 auto 32px;
+}
+.final .cta-sub { color: #9fb3c6; }
+
+/* Footer */
+.footer {
+  background: #0d2438;
+  color: #8fa3b5;
+  text-align: center;
+  font-size: 13px;
+  padding: 28px 20px;
+  line-height: 1.8;
+}
+
+@media (min-width: 640px) {
+  .trust-row { flex-direction: row; justify-content: center; gap: 28px; }
+  .benefits-grid { grid-template-columns: 1fr 1fr; }
+  .phases-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">PROTOCOLO 21D</div>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Programa de 21 días · En casa · Sin equipos</span>
+    <h1>Protocolo 21D: el Plan de Movimiento Diario que Devuelve Energía y Vitalidad a los Hombres de 45+</h1>
+    <p class="sub">Ejercicios simples de 10 minutos al día, inspirados en los hábitos de movimiento de las comunidades más longevas y activas de África. Sin gimnasio, sin equipos, sin rutinas agotadoras.</p>
+    <img class="hero-img" src="https://images.unsplash.com/photo-1758599879463-58aad7d947f3?w=1200&q=80" alt="Hombre haciendo estiramientos en su sala">
+    <div id="hotmart-sf-1"></div>
+    <p class="cta-sub">Acceso inmediato · Pago 100% seguro · Garantía de 7 días</p>
+    <div class="trust-row">
+      <span>Sin equipos ni gimnasio</span>
+      <span>Solo 10 minutos al día</span>
+      <span>Apto para principiantes</span>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--white">
+  <div class="wrap">
+    <h2 class="sec-title">¿Te Suena Familiar?</h2>
+    <div class="card">
+      <ul class="pain-list">
+        <li>Te levantas cansado aunque hayas dormido toda la noche</li>
+        <li>Sientes el cuerpo rígido al agacharte o subir escaleras</li>
+        <li>La energía se te acaba a mitad del día</li>
+        <li>Hace años que no tienes una rutina de ejercicio que puedas mantener</li>
+        <li>Sientes que tu cuerpo "ya no responde como antes"</li>
+      </ul>
+    </div>
+    <p class="closer">Nada de esto es inevitable. En la mayoría de los casos, es simplemente falta de movimiento regular — <strong>y eso tiene solución a cualquier edad</strong>.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap prose">
+    <h2 class="sec-title">¿Por Qué "Protocolo 21D"?</h2>
+    <img class="sec-img" src="https://images.unsplash.com/photo-1774618623731-bbbf59e4b6ea?w=800&q=80" alt="Persona mayor haciendo ejercicios suaves en el parque" loading="lazy">
+    <p>En varias comunidades de África, los hombres mayores se mantienen activos, fuertes y ágiles hasta edades avanzadas. ¿Su secreto? No es genética ni suplementos: es el movimiento natural integrado a la vida diaria — caminar, agacharse, cargar, estirarse — todos los días, a un ritmo constante.</p>
+    <p>Protocolo 21D toma esa lógica simple y la convierte en un plan progresivo de 21 días que cualquier hombre puede seguir en su casa: movimientos suaves, funcionales y seguros, adaptados para cuerpos que llevan años con poco ejercicio.</p>
+    <p class="author-note">El programa fue organizado por <strong>Marco Salazar</strong>, entrenador e investigador de hábitos saludables, especializado en actividad física para hombres mayores de 45.</p>
+  </div>
+</section>
+
+<section class="sec sec--white">
+  <div class="wrap">
+    <h2 class="sec-title">Lo que Puedes Esperar al Completar los 21 Días</h2>
+    <div class="benefits-grid">
+      <div class="benefit"><span class="check">✓</span><p>Más energía estable durante todo el día</p></div>
+      <div class="benefit"><span class="check">✓</span><p>Mayor movilidad y flexibilidad en caderas, espalda y hombros</p></div>
+      <div class="benefit"><span class="check">✓</span><p>Mejor calidad de sueño y despertar con sensación de descanso</p></div>
+      <div class="benefit"><span class="check">✓</span><p>Más fuerza para las actividades diarias</p></div>
+      <div class="benefit"><span class="check">✓</span><p>Mejor postura y equilibrio</p></div>
+      <div class="benefit"><span class="check">✓</span><p>El hábito de ejercicio más fácil de mantener de tu vida</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2 class="sec-title">Cómo Funciona: 21 Días, 4 Fases</h2>
+    <div class="phases-grid">
+      <div class="phase">
+        <div class="num">1</div>
+        <div class="days">Días 1–5</div>
+        <h3>Activación Suave</h3>
+        <p>Movimientos básicos para despertar el cuerpo sin dolor ni impacto.</p>
+      </div>
+      <div class="phase">
+        <div class="num">2</div>
+        <div class="days">Días 6–11</div>
+        <h3>Movilidad y Equilibrio</h3>
+        <p>Estiramientos y ejercicios de estabilidad para articulaciones más libres.</p>
+      </div>
+      <div class="phase">
+        <div class="num">3</div>
+        <div class="days">Días 12–17</div>
+        <h3>Fuerza Funcional</h3>
+        <p>Ejercicios con el peso del cuerpo para la fuerza que usas en el día a día.</p>
+      </div>
+      <div class="phase">
+        <div class="num">4</div>
+        <div class="days">Días 18–21</div>
+        <h3>Hábito y Vitalidad</h3>
+        <p>La rutina completa integrada, lista para mantener de por vida.</p>
+      </div>
+    </div>
+    <div id="hotmart-sf-2"></div>
+    <p class="cta-sub">Acceso inmediato · Pago 100% seguro · Garantía de 7 días</p>
+  </div>
+</section>
+
+<section class="sec sec--white">
+  <div class="wrap">
+    <h2 class="sec-title">Todo lo que Recibes Hoy</h2>
+    <img class="sec-img" src="https://images.unsplash.com/photo-1760084081757-6f918c08403b?w=800&q=80" alt="Hombre haciendo ejercicio en casa" loading="lazy">
+    <div class="include-list">
+      <div class="card include-main">
+        <span class="tag tag--main">Programa Principal</span>
+        <h3>Programa Completo de 21 Días — Protocolo 21D</h3>
+        <p>Las 4 fases con instrucciones día a día. Ejercicios explicados paso a paso, para hacer en casa, sin equipos, en unos 10 minutos diarios.</p>
+      </div>
+      <div class="card">
+        <span class="tag tag--bonus">Bono 1</span>
+        <h3>Movilidad en 5 Minutos</h3>
+        <p>Rutina matinal de estiramientos suaves para empezar el día sin rigidez.</p>
+      </div>
+      <div class="card">
+        <span class="tag tag--bonus">Bono 2</span>
+        <h3>Energía Natural</h3>
+        <p>Guía práctica de alimentación simple: ajustes fáciles para tener más energía, sin dietas extremas.</p>
+      </div>
+      <div class="card">
+        <span class="tag tag--bonus">Bono 3</span>
+        <h3>Sueño Reparador</h3>
+        <p>Rutina nocturna de relajación y hábitos para dormir mejor y despertar renovado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2 class="sec-title">Lo que Dicen Quienes ya lo Probaron</h2>
+    <div class="testi-grid">
+      <div class="card testi">
+        <p class="quote">"Llevaba años sin hacer ejercicio y me daba miedo empezar. Las primeras rutinas son tan suaves que las hice sin problema, y a la segunda semana ya subía las escaleras sin quedarme sin aire."</p>
+        <div class="who">
+          <div class="avatar">RM</div>
+          <div><strong>Roberto M., 51 años</strong><span>Ciudad de México</span></div>
+        </div>
+      </div>
+      <div class="card testi">
+        <p class="quote">"Lo que más noté fue el sueño. Duermo mejor desde la primera semana y me levanto con ganas de moverme. Diez minutos al día es algo que sí puedo cumplir."</p>
+        <div class="who">
+          <div class="avatar">AR</div>
+          <div><strong>Alejandro R., 47 años</strong><span>Bogotá, Colombia</span></div>
+        </div>
+      </div>
+      <div class="card testi">
+        <p class="quote">"A los 58 pensaba que la rigidez era normal a mi edad. Hoy me agacho, camino más y tengo una energía que no recordaba. Ojalá hubiera empezado antes."</p>
+        <div class="who">
+          <div class="avatar">CH</div>
+          <div><strong>Carlos H., 58 años</strong><span>Lima, Perú</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--white">
+  <div class="wrap">
+    <div class="card guarantee">
+      <div class="shield">✓</div>
+      <h2>Garantía Total de 7 Días</h2>
+      <p>Prueba el programa completo durante 7 días. Si sientes que no es para ti, escríbenos y te devolvemos el 100% de tu dinero, sin preguntas y sin complicaciones. El riesgo es cero.</p>
+    </div>
+    <div class="cta-block">
+      <div id="hotmart-sf-3"></div>
+      <p class="cta-sub">Acceso inmediato · Pago 100% seguro · Garantía de 7 días</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec faq">
+  <div class="wrap">
+    <h2 class="sec-title">Preguntas Frecuentes</h2>
+    <details>
+      <summary>¿Necesito estar en forma para empezar?</summary>
+      <p class="answer">No. El programa comienza con movimientos muy suaves y avanza de forma gradual. Está diseñado justamente para hombres que llevan tiempo sin ejercitarse.</p>
+    </details>
+    <details>
+      <summary>¿Necesito equipos o ir al gimnasio?</summary>
+      <p class="answer">No. Todos los ejercicios se hacen en casa, solo con el peso de tu cuerpo. Como mucho, una silla y una toalla.</p>
+    </details>
+    <details>
+      <summary>¿Cuánto tiempo toma cada día?</summary>
+      <p class="answer">Entre 7 y 10 minutos. La constancia importa más que la duración.</p>
+    </details>
+    <details>
+      <summary>¿Cómo recibo el acceso?</summary>
+      <p class="answer">Inmediatamente después de la compra recibes un correo con tu acceso al programa completo y los 3 bonos.</p>
+    </details>
+    <details>
+      <summary>¿Qué pasa si no me adapto al programa?</summary>
+      <p class="answer">Tienes 7 días de garantía. Si no es para ti, te devolvemos todo tu dinero sin preguntas.</p>
+    </details>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Empieza Hoy. En 21 Días tu Cuerpo lo Nota.</h2>
+    <p>Diez minutos al día. Sin equipos. Sin excusas. Solo un plan simple que sí puedes cumplir.</p>
+    <img class="final-img" src="https://images.unsplash.com/photo-1571008840902-28bf8f9cd71a?w=800&q=80" alt="Hombre mayor activo y lleno de energía" loading="lazy">
+    <div id="hotmart-sf-4"></div>
+    <p class="cta-sub">Acceso inmediato · Pago 100% seguro · Garantía de 7 días</p>
+  </div>
+</section>
+
+<div class="footer">
+  © 2026 Protocolo 21D · Marco Salazar · Todos los derechos reservados.<br>
+  Este contenido es informativo y educativo. Los resultados individuales pueden variar.<br>
+  Consulta a tu médico antes de iniciar cualquier programa de ejercicio.
+</div>
+
+<!-- HOTMART - Sales Funnel Widget -->
+<script src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
+<script>
+checkoutElements.init('salesFunnel').mount('#hotmart-sf-1')
+checkoutElements.init('salesFunnel').mount('#hotmart-sf-2')
+checkoutElements.init('salesFunnel').mount('#hotmart-sf-3')
+checkoutElements.init('salesFunnel').mount('#hotmart-sf-4')
+</script>
+<!-- HOTMART - Sales Funnel Widget -->
+
+</body>
+</html>

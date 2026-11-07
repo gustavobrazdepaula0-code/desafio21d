@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="/config-oferta.js"></script>
+<meta charset="UTF-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>El Truco del Camerino — Desafío 21 Días</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Clarity -->
+
+
+<!-- UTMify -->
+
+
+<style>
+:root{
+  --bg:#0f0b0a;
+  --bg2:#16100e;
+  --card:#17110f;
+  --card-border:#2a1d19;
+  --green:#f5a97f;
+  --green-dark:#e8875a;
+  --green-glow:rgba(245,169,127,.15);
+  --red:#ef4444;
+  --red-bg:#1f0a0a;
+  --orange:#ff6b35;
+  --yellow:#ffcc00;
+  --text:#f7f2f0;
+  --text-dim:#a3958f;
+  --text-mute:#5e504a;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:110px; /* Space for sticky bottom bar */
+}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+.wrap{max-width:452px;margin:0 auto;padding:0 20px;}
+
+/* ═══════════════════════════════════════════
+   HERO
+════════════════════════════════════════════ */
+.hero{
+  padding-top:24px;
+  padding-bottom:32px;
+  position:relative;
+  background:linear-gradient(180deg, #000 0%, #000 45%, var(--bg) 100%);
+}
+
+.hero-media{
+  position:relative;
+  max-width:412px;
+  margin:0 auto 20px;
+  aspect-ratio:941/1168;
+  border-radius:0;
+  overflow:hidden;
+  background:#000;
+  border:none;
+}
+.hero-person{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  filter:brightness(.95) contrast(1.05);
+}
+.hero-media::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, transparent 65%, rgba(0,0,0,.9) 100%);
+  pointer-events:none;
+}
+
+/* Badges under person */
+.hero-badges{
+  position:absolute;
+  bottom:18px;
+  left:0;right:0;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  z-index:3;
+}
+.hero-badge{
+  background:rgba(22,16,14,.85);
+  border:1px solid #3a2a24;
+  backdrop-filter:blur(6px);
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  padding:6px 12px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  letter-spacing:.5px;
+}
+.hero-badge::before{
+  content:'';
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 8px var(--green);
+}
+
+/* Code tag */
+.code-tag{
+  display:block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--green);
+  text-align:center;
+  letter-spacing:2px;
+  margin-bottom:14px;
+  text-transform:uppercase;
+}
+.code-tag::before{content:'▸ ';}
+.code-tag::after{content:' ⁃';}
+
+.hero h1{
+  font-size:26px;
+  font-weight:900;
+  color:#fff;
+  text-align:center;
+  line-height:1.15;
+  letter-spacing:-.3px;
+  margin-bottom:8px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(180deg,#fff,#f5a97f);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  display:block;
+  font-size:22px;
+  margin-top:2px;
+}
+
+.hero-desc{
+  text-align:center;
+  font-size:14px;
+  color:var(--text-dim);
+  line-height:1.65;
+  margin:16px 0 8px;
+}
+.hero-desc strong{color:#fff;}
+
+.hero-note{
+  text-align:center;
+  font-size:13px;
+  color:var(--text-dim);
+  margin-bottom:20px;
+}
+.hero-note strong{color:var(--green);}
+
+/* Green CTA button (military) */
+.btn-military{
+  display:block;
+  width:100%;
+  padding:16px 20px;
+  background:linear-gradient(180deg, #f5a97f, #e8875a);
+  color:#3b1607;
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  box-shadow:
+    0 0 0 1px rgba(245,169,127,.4),
+    0 8px 25px rgba(232,135,90,.35),
+    inset 0 1px 0 rgba(255,255,255,.3);
+  text-align:center;
+  transition:transform .1s, filter .1s;
+}
+.btn-military:active{transform:scale(.98);filter:brightness(.95);}
+.btn-military::before{content:'▸ ';}
+
+/* Classified tag */
+.classified{
+  text-align:center;
+  margin-top:16px;
+}
+.classified-tag{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--text-mute);
+  border:1px solid var(--card-border);
+  padding:5px 12px;
+  border-radius:4px;
+  text-transform:uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   PRICE + FEATURES SECTION
+════════════════════════════════════════════ */
+.price-sec{
+  padding:24px 20px 32px;
+  background:
+    linear-gradient(180deg, transparent, rgba(245,169,127,.02) 50%, transparent),
+    var(--bg);
+  position:relative;
+}
+/* Corner brackets */
+.price-sec::before, .price-sec::after{
+  content:'';
+  position:absolute;
+  width:20px;height:20px;
+  border:1px solid rgba(245,169,127,.3);
+}
+.price-sec::before{top:10px;left:10px;border-right:none;border-bottom:none;}
+.price-sec::after{bottom:10px;right:10px;border-left:none;border-top:none;}
+
+.price-title{
+  text-align:center;
+  margin-bottom:20px;
+}
+.price-title-top{
+  font-family:'Inter',sans-serif;
+  font-weight:900;
+  font-style:italic;
+  font-size:22px;
+  color:#fff;
+  letter-spacing:1px;
+  margin-bottom:4px;
+}
+.price-title-main{
+  font-weight:800;
+  font-size:20px;
+  color:#fff;
+  letter-spacing:3px;
+}
+
+.price-box{
+  background:
+    radial-gradient(circle at 50% 0%, rgba(245,169,127,.08), transparent 70%),
+    #0a0605;
+  border:1px solid #2e201b;
+  border-radius:14px;
+  padding:22px 16px;
+  text-align:center;
+  margin-bottom:24px;
+  position:relative;
+  box-shadow:inset 0 0 20px rgba(0,0,0,.5);
+}
+.price-row{
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:10px;
+  flex-wrap:wrap;
+}
+.price-currency{
+  font-size:22px;
+  font-weight:700;
+  color:var(--text-dim);
+}
+.price-val{
+  font-size:52px;
+  font-weight:900;
+  color:#fff;
+  line-height:1;
+  letter-spacing:-1px;
+}
+.price-old{
+  font-size:14px;
+  color:var(--text-mute);
+  text-decoration:line-through;
+}
+.price-offer{
+  display:inline-block;
+  background:var(--green);
+  color:#3b1607;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding:3px 8px;
+  border-radius:4px;
+  vertical-align:middle;
+}
+.price-access{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border:1px solid #3a2a24;
+  background:#140c08;
+  color:var(--text-dim);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  padding:6px 14px;
+  border-radius:20px;
+  text-transform:uppercase;
+}
+.price-access::before{content:'∞';color:var(--green);font-size:14px;}
+
+/* Feature list */
+.feature-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-bottom:28px;
+  align-items:center;
+}
+.feature-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-size:14px;
+  color:#e8e8e8;
+  font-weight:600;
+}
+.feature-icon{
+  width:32px;height:32px;
+  background:#140d0b;
+  border:1px solid #2e201b;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  flex-shrink:0;
+}
+
+/* SSL bar */
+.ssl-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 16px;
+  border-top:1px dashed #2e201b;
+  border-bottom:1px dashed #2e201b;
+  margin-top:20px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--text-mute);
+  letter-spacing:1px;
+}
+.ssl-bar .dot{
+  display:inline-block;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 8px var(--green);
+  margin-right:6px;
+  vertical-align:middle;
+}
+
+/* ═══════════════════════════════════════════
+   VS COMPARISON
+════════════════════════════════════════════ */
+.vs-sec{
+  padding:40px 20px;
+  background:var(--bg);
+}
+.vs-title{
+  text-align:center;
+  font-size:22px;
+  font-weight:900;
+  color:#fff;
+  letter-spacing:1px;
+  margin-bottom:24px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--card-border);
+}
+.vs-title .vs{color:var(--green);}
+
+.vs-rows{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.vs-row{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:10px;
+}
+.vs-cell{
+  padding:14px 12px;
+  border-radius:12px;
+  min-height:80px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:6px;
+}
+.vs-cell.civil{
+  background:linear-gradient(180deg, rgba(239,68,68,.1), rgba(239,68,68,.03));
+  border:1px solid rgba(239,68,68,.25);
+}
+.vs-cell.militar{
+  background:linear-gradient(180deg, rgba(245,169,127,.08), rgba(245,169,127,.02));
+  border:1px solid rgba(245,169,127,.25);
+}
+.vs-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  text-align:right;
+}
+.vs-cell.civil .vs-label{color:var(--red);text-align:right;}
+.vs-cell.militar .vs-label{color:var(--green);text-align:left;}
+.vs-text{
+  font-size:13px;
+  font-weight:700;
+  color:#fff;
+  line-height:1.35;
+}
+.vs-cell.civil .vs-text{text-align:right;}
+.vs-cell.militar .vs-text{text-align:left;}
+.vs-sep{
+  width:28px;height:28px;
+  border-radius:50%;
+  background:#140d0b;
+  border:1px solid var(--card-border);
+  color:var(--text-mute);
+  font-size:11px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+/* ═══════════════════════════════════════════
+   PROGRESIÓN OPERACIONAL (Timeline)
+════════════════════════════════════════════ */
+.results-sec{
+  padding:40px 20px;
+}
+.results-title{
+  text-align:center;
+  font-size:22px;
+  font-weight:900;
+  color:#fff;
+  margin-bottom:6px;
+  letter-spacing:.5px;
+}
+.results-title span{color:var(--green);}
+.results-sub{
+  text-align:center;
+  font-size:13px;
+  color:var(--text-dim);
+  margin-bottom:28px;
+  padding:0 8px;
+  line-height:1.6;
+}
+
+/* Overall progress bar */
+.prog-bar-wrap{
+  max-width:412px;
+  margin:0 auto 26px;
+  padding:14px 16px;
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:10px;
+}
+.prog-bar-labels{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--text-dim);
+  letter-spacing:1px;
+  margin-bottom:8px;
+}
+.prog-bar-labels .g{color:var(--green);font-weight:800;}
+.prog-bar-track{
+  height:8px;
+  background:#140d0b;
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid #2a1d19;
+  position:relative;
+}
+.prog-bar-fill{
+  height:100%;
+  width:100%;
+  background:linear-gradient(90deg, #e8875a 0%, #f5a97f 50%, #ffcc00 100%);
+  border-radius:20px;
+  box-shadow:0 0 12px rgba(245,169,127,.5);
+}
+.prog-bar-ticks{
+  display:flex;
+  justify-content:space-between;
+  margin-top:6px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  color:var(--text-mute);
+}
+
+/* Timeline */
+.timeline{
+  position:relative;
+  max-width:412px;
+  margin:0 auto;
+  padding-left:44px;
+}
+.timeline::before{
+  content:'';
+  position:absolute;
+  left:14px;
+  top:12px;
+  bottom:12px;
+  width:2px;
+  background:linear-gradient(180deg,
+    var(--green) 0%,
+    var(--green) 75%,
+    var(--yellow) 100%);
+  border-radius:2px;
+}
+
+.tl-phase{
+  position:relative;
+  margin-bottom:16px;
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-left:3px solid var(--green);
+  border-radius:10px;
+  padding:14px 14px 14px 14px;
+}
+.tl-phase:last-child{margin-bottom:0;border-left-color:var(--yellow);}
+
+.tl-dot{
+  position:absolute;
+  left:-37px;
+  top:14px;
+  width:28px;
+  height:28px;
+  background:var(--bg);
+  border:2px solid var(--green);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:800;
+  color:var(--green);
+  box-shadow:0 0 0 4px rgba(15,11,10,1), 0 0 12px rgba(245,169,127,.4);
+}
+.tl-phase:last-child .tl-dot{
+  border-color:var(--yellow);
+  color:var(--yellow);
+  box-shadow:0 0 0 4px rgba(15,11,10,1), 0 0 14px rgba(255,204,0,.5);
+}
+
+.tl-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:6px;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.tl-phase-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--green);
+  letter-spacing:1.5px;
+  font-weight:800;
+}
+.tl-phase:last-child .tl-phase-tag{color:var(--yellow);}
+.tl-days{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--text-dim);
+  letter-spacing:.5px;
+}
+.tl-title{
+  font-size:16px;
+  font-weight:900;
+  color:#fff;
+  letter-spacing:.3px;
+  margin-bottom:6px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.tl-title .ico{font-size:18px;}
+.tl-desc{
+  font-size:13px;
+  color:var(--text-dim);
+  line-height:1.55;
+}
+.tl-desc strong{color:#fff;}
+
+/* Milestone metrics row */
+.tl-metrics{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px dashed var(--card-border);
+}
+.tl-metric{
+  flex:1;
+  text-align:center;
+}
+.tl-metric-val{
+  font-family:'JetBrains Mono',monospace;
+  font-size:15px;
+  font-weight:800;
+  color:var(--green);
+  line-height:1;
+}
+.tl-phase:last-child .tl-metric-val{color:var(--yellow);}
+.tl-metric-lbl{
+  font-size:9px;
+  color:var(--text-mute);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-top:4px;
+}
+
+.results-disclaimer{
+  text-align:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  color:var(--text-mute);
+  letter-spacing:1px;
+  margin:22px 0 24px;
+}
+
+/* REALIDADE ATUAL */
+.reality-box{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  padding:20px 18px;
+  margin-top:8px;
+}
+.reality-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:16px;
+  font-weight:900;
+  color:#fff;
+  margin-bottom:14px;
+  letter-spacing:.5px;
+}
+.reality-title .x{
+  width:26px;height:26px;
+  border-radius:50%;
+  background:rgba(239,68,68,.15);
+  border:1px solid var(--red);
+  color:var(--red);
+  font-size:14px;
+  font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+}
+.reality-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.reality-list li{
+  position:relative;
+  padding-left:20px;
+  font-size:14px;
+  color:#e5e5e5;
+  line-height:1.65;
+}
+.reality-list li::before{
+  content:'';
+  position:absolute;
+  left:4px;top:8px;
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--red);
+}
+.reality-list li strong{color:var(--red);font-weight:700;}
+
+/* ═══════════════════════════════════════════
+   A VERDADE BRUTAL
+════════════════════════════════════════════ */
+.truth-sec{
+  padding:32px 20px;
+}
+.truth-box{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  padding:22px 20px;
+}
+.truth-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:18px;
+  font-weight:900;
+  color:#fff;
+  margin-bottom:16px;
+  letter-spacing:.5px;
+}
+.truth-icon{
+  width:34px;height:34px;
+  border-radius:50%;
+  background:#140d0b;
+  border:1px solid var(--card-border);
+  font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.truth-p1{
+  font-size:15px;
+  color:#fff;
+  font-weight:700;
+  line-height:1.5;
+  margin-bottom:12px;
+}
+.truth-p1 s{color:var(--text-mute);font-weight:400;}
+.truth-p2{
+  font-size:14px;
+  color:var(--text-dim);
+  line-height:1.65;
+}
+.truth-p2 .tag-forjar{
+  display:inline-block;
+  background:var(--green);
+  color:#3b1607;
+  padding:2px 10px;
+  border-radius:6px;
+  font-weight:900;
+  font-size:12px;
+  letter-spacing:1px;
+  vertical-align:baseline;
+  margin:0 3px;
+}
+
+/* ═══════════════════════════════════════════
+   CENTRO DE COMANDO / APP MOCKUP
+════════════════════════════════════════════ */
+.command-sec{
+  padding:40px 20px;
+  text-align:center;
+}
+.command-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(245,169,127,.08);
+  border:1px solid rgba(245,169,127,.25);
+  color:var(--green);
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  padding:6px 14px;
+  border-radius:20px;
+  margin-bottom:18px;
+}
+.command-tag::before{
+  content:'';
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 8px var(--green);
+}
+.command-title{
+  font-size:24px;
+  font-weight:900;
+  color:#fff;
+  line-height:1.15;
+  margin-bottom:12px;
+  letter-spacing:-.3px;
+}
+.command-title em{
+  font-style:normal;
+  color:var(--green);
+}
+.command-desc{
+  font-size:14px;
+  color:var(--text-dim);
+  line-height:1.65;
+  margin-bottom:28px;
+}
+.command-desc strong{color:#fff;}
+
+/* App mockup area */
+.mockup-area{
+  position:relative;
+  padding:40px 0 30px;
+  min-height:420px;
+}
+
+/* Floating badges */
+.float-badge{
+  position:absolute;
+  background:#17110f;
+  border:1px solid var(--card-border);
+  border-radius:10px;
+  padding:8px 10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  z-index:3;
+  text-align:left;
+  box-shadow:0 4px 15px rgba(0,0,0,.5);
+}
+.float-badge-icon{
+  width:26px;height:26px;
+  border-radius:6px;
+  background:#140d0b;
+  border:1px solid #2e201b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+  flex-shrink:0;
+}
+.float-badge-text .tit{
+  font-size:11px;
+  font-weight:800;
+  color:#fff;
+  line-height:1.1;
+}
+.float-badge-text .sub{
+  font-size:9px;
+  color:var(--text-dim);
+  margin-top:1px;
+}
+
+.badge-top-left{top:20px;left:0;}
+.badge-top-right{top:20px;right:0;}
+.badge-bot-left{bottom:60px;left:0;}
+.badge-bot-right{bottom:60px;right:0;}
+
+/* Phone in center */
+.mockup-phone{
+  width:170px;
+  height:340px;
+  background:#000;
+  border:5px solid #1a1a1a;
+  border-radius:32px;
+  margin:0 auto;
+  position:relative;
+  z-index:2;
+  padding:8px;
+  box-shadow:
+    0 0 0 1px #2a2a2a,
+    0 20px 60px rgba(0,0,0,.8),
+    0 0 60px rgba(245,169,127,.15);
+}
+.mockup-notch{
+  width:60px;
+  height:14px;
+  background:#000;
+  border-radius:0 0 10px 10px;
+  margin:0 auto;
+  position:relative;
+  z-index:3;
+}
+.mockup-screen{
+  height:calc(100% - 14px);
+  background:linear-gradient(180deg,#140d0b,#0a0605);
+  border-radius:22px;
+  overflow:hidden;
+  padding:12px 10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.mockup-hdr{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.mockup-hdr-name{
+  font-size:9px;
+  color:var(--text-dim);
+}
+.mockup-hdr-name strong{color:#fff;display:block;font-size:11px;font-weight:800;}
+.mockup-hdr-icon{
+  width:22px;height:22px;
+  border-radius:50%;
+  background:#2a1d19;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;
+}
+.mockup-status{
+  font-family:'JetBrains Mono',monospace;
+  font-size:7px;
+  color:var(--green);
+  letter-spacing:1px;
+  margin-top:4px;
+}
+.mockup-big-num{
+  font-size:22px;
+  font-weight:900;
+  color:#fff;
+  line-height:1;
+}
+.mockup-play{
+  width:36px;height:36px;
+  border-radius:50%;
+  background:var(--green);
+  color:#3b1607;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+  margin-left:auto;
+  margin-top:-24px;
+}
+.mockup-week{
+  background:#140d0b;
+  border:1px solid #2a1d19;
+  border-radius:8px;
+  padding:6px 8px;
+  margin-top:2px;
+}
+.mockup-week-lbl{
+  font-family:'JetBrains Mono',monospace;
+  font-size:6px;
+  color:var(--text-dim);
+  letter-spacing:.5px;
+  margin-bottom:4px;
+  text-transform:uppercase;
+}
+.mockup-week-days{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:2px;
+}
+.mockup-day{
+  aspect-ratio:1;
+  border-radius:3px;
+  background:#2a1d19;
+  font-size:6px;
+  color:var(--text-dim);
+  display:flex;align-items:center;justify-content:center;
+}
+.mockup-day.done{background:var(--green);color:#3b1607;font-weight:900;}
+.mockup-day.today{background:var(--green);color:#3b1607;font-weight:900;box-shadow:0 0 6px var(--green);}
+.mockup-metric-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+}
+.mockup-metric{
+  background:#140d0b;
+  border:1px solid #2a1d19;
+  border-radius:6px;
+  padding:6px;
+}
+.mockup-metric-lbl{
+  font-size:6px;
+  color:var(--text-mute);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+.mockup-metric-val{
+  font-size:11px;
+  font-weight:900;
+  color:#fff;
+  margin-top:2px;
+}
+.mockup-metric-val span{color:var(--green);}
+.mockup-mission{
+  background:#140d0b;
+  border:1px solid #2a1d19;
+  border-radius:6px;
+  padding:6px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.mockup-mission-icon{
+  width:28px;height:28px;
+  background:#2a1d19;
+  border-radius:5px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+}
+.mockup-mission-text .l{font-size:6px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.5px;}
+.mockup-mission-text .t{font-size:9px;font-weight:800;color:#fff;margin-top:1px;}
+
+.mockup-avail{
+  text-align:center;
+  font-size:12px;
+  color:var(--text-dim);
+  margin-top:20px;
+}
+.mockup-avail::before{content:'📅 ';}
+
+/* ═══════════════════════════════════════════
+   BONUS SECTION
+════════════════════════════════════════════ */
+.bonus-sec{
+  padding:40px 20px;
+}
+.bonus-title{
+  text-align:center;
+  font-size:24px;
+  font-weight:900;
+  color:#fff;
+  margin-bottom:22px;
+  letter-spacing:-.3px;
+}
+.bonus-title span{color:var(--green);}
+
+.bonus-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-bottom:22px;
+}
+.bonus-card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  padding:18px;
+  position:relative;
+}
+.bonus-card-icon{
+  width:44px;height:44px;
+  background:#140d0b;
+  border:1px solid #2e201b;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+  margin-bottom:12px;
+}
+.bonus-card h3{
+  font-size:16px;
+  font-weight:900;
+  color:#fff;
+  line-height:1.25;
+  margin-bottom:8px;
+}
+.bonus-card p{
+  font-size:13px;
+  color:var(--text-dim);
+  line-height:1.65;
+  margin-bottom:14px;
+}
+.bonus-price{
+  padding-top:12px;
+  border-top:1px solid var(--card-border);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.bonus-price .old{
+  font-size:13px;
+  color:var(--text-mute);
+  text-decoration:line-through;
+}
+.bonus-price .now{
+  font-size:14px;
+  color:var(--green);
+  font-weight:900;
+  letter-spacing:.5px;
+}
+
+.bonus-total{
+  text-align:center;
+  padding:14px 16px;
+  font-size:13px;
+  color:var(--yellow);
+  font-weight:700;
+  line-height:1.5;
+}
+.bonus-total::before{content:'🎖️ ';}
+
+/* Orange CTA button */
+.btn-orange{
+  display:block;
+  width:calc(100% - 40px);
+  max-width:400px;
+  margin:16px auto;
+  padding:18px 20px;
+  background:linear-gradient(90deg, #ff6b35, #ffcc00);
+  color:#1a0a00;
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  box-shadow:
+    0 0 0 1px rgba(255,204,0,.3),
+    0 10px 30px rgba(255,107,53,.4);
+  text-align:center;
+  transition:transform .1s, filter .1s;
+}
+.btn-orange:active{transform:scale(.98);}
+.btn-orange::before{content:'🔥 ';}
+
+/* ═══════════════════════════════════════════
+   TESTIMONIOS
+════════════════════════════════════════════ */
+.testi-sec{
+  padding:40px 20px;
+}
+.testi-title{
+  text-align:center;
+  font-size:24px;
+  font-weight:900;
+  color:#fff;
+  margin-bottom:6px;
+  letter-spacing:-.3px;
+}
+.testi-title span{color:var(--green);}
+.testi-sub{
+  text-align:center;
+  font-size:13px;
+  color:var(--text-dim);
+  margin-bottom:24px;
+}
+
+.testi-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.testi-card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  padding:18px;
+}
+.testi-hdr{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+.testi-avatar{
+  width:44px;height:44px;
+  border-radius:50%;
+  overflow:hidden;
+  flex-shrink:0;
+  border:1px solid var(--card-border);
+  background:#140d0b;
+}
+.testi-avatar img{width:100%;height:100%;object-fit:cover;}
+.testi-name{
+  font-size:15px;
+  font-weight:800;
+  color:#fff;
+  line-height:1.2;
+}
+.testi-age{
+  font-size:11px;
+  color:var(--text-dim);
+  margin-top:2px;
+}
+.testi-quote-tit{
+  font-size:14px;
+  font-weight:800;
+  color:var(--green);
+  margin-bottom:8px;
+}
+.testi-text{
+  font-size:13px;
+  color:#d8d0cc;
+  line-height:1.65;
+  font-style:italic;
+  margin-bottom:12px;
+}
+.testi-stars{
+  color:var(--yellow);
+  font-size:14px;
+  letter-spacing:2px;
+}
+
+/* ═══════════════════════════════════════════
+   FAQ
+════════════════════════════════════════════ */
+.faq-sec{
+  padding:40px 20px;
+}
+.faq-title{
+  text-align:center;
+  font-size:24px;
+  font-weight:900;
+  color:#fff;
+  margin-bottom:22px;
+}
+.faq-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.faq-item{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:12px;
+  overflow:hidden;
+}
+.faq-item summary{
+  cursor:pointer;
+  list-style:none;
+  padding:16px 44px 16px 18px;
+  font-size:14px;
+  font-weight:700;
+  color:#fff;
+  position:relative;
+}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{
+  content:'+';
+  position:absolute;
+  right:18px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:20px;
+  color:var(--green);
+  font-weight:300;
+}
+.faq-item[open] summary::after{content:'–';}
+.faq-answer{
+  padding:0 18px 16px;
+  font-size:13px;
+  color:var(--text-dim);
+  line-height:1.7;
+}
+
+/* ═══════════════════════════════════════════
+   STICKY BOTTOM BAR
+════════════════════════════════════════════ */
+.sticky-bar{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  background:linear-gradient(180deg, #140d0b, #0a0605);
+  border-top:1px solid rgba(245,169,127,.3);
+  padding:10px 16px;
+  z-index:1000;
+  box-shadow:0 -8px 30px rgba(0,0,0,.6);
+}
+.sticky-inner{
+  max-width:452px;
+  margin:0 auto;
+}
+.sticky-alert{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:1px;
+  margin-bottom:6px;
+  text-transform:uppercase;
+}
+.sticky-alert::before{content:'⚡';color:var(--yellow);}
+.sticky-time{
+  text-align:center;
+  font-size:11px;
+  color:var(--text-dim);
+  margin-bottom:8px;
+}
+.sticky-time strong{
+  font-family:'JetBrains Mono',monospace;
+  color:var(--green);
+  font-size:13px;
+}
+.sticky-bar .btn-orange{
+  margin:0;
+  width:100%;
+  padding:14px 16px;
+  font-size:13px;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════ */
+.footer{
+  padding:24px 20px;
+  text-align:center;
+  color:var(--text-mute);
+  font-size:11px;
+  line-height:1.8;
+  border-top:1px solid var(--card-border);
+  margin-top:20px;
+}
+</style>
+
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     CLOAKER / COUNTRY BLOCKER (BR, CN, IN → TSL)
+════════════════════════════════════════════ -->
+
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="wrap">
+
+    <!-- Media: Mariana Castillo en su consultorio -->
+    <div class="hero-media">
+      <img src="/lp/mariana-consultorio.webp" alt="Mariana Castillo, fisioterapeuta pélvica" class="hero-person">
+
+      <!-- Badges -->
+      <div class="hero-badges">
+        <span class="hero-badge">MARIANA CASTILLO</span>
+        <span class="hero-badge">+5 MIL HOMBRES</span>
+      </div>
+    </div>
+
+    <span class="code-tag">Fisioterapeuta pélvica revela</span>
+
+    <h1>
+      PRESENTAMOS: EL
+      <em>Truco del Camerino</em>
+    </h1>
+
+    <p class="hero-desc">
+      La secuencia de 3 tiempos que reactiva el "<strong>Músculo Fantasma</strong>" y devuelve firmeza, control y sueño en <strong>21 días</strong> — con pocos minutos al día, sin pastillas.
+    </p>
+
+    <p class="hero-note">
+      Esto no es otra pastilla. Es <strong>despertar algo que tu cuerpo ya tiene.</strong>
+    </p>
+
+    <a href="https://pay.hotmart.com/T108362405D?off=o99570xb&checkoutMode=10" class="btn-military checkout-btn">Quiero Empezar Hoy</a>
+
+    <div class="classified">
+      <span class="classified-tag mono">▸ +5.000 HOMBRES ATENDIDOS EN CONSULTORIO</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     PRICE + FEATURES
+════════════════════════════════════════════ -->
+<section class="price-sec">
+  <div class="wrap">
+
+    <div class="price-title">
+      <div class="price-title-top">DESAFÍO 21 DÍAS</div>
+      <div class="price-title-main">EL TRUCO DEL CAMERINO</div>
+    </div>
+
+    <div class="price-box">
+      <div class="price-row">
+        <span class="price-currency">$</span>
+        <span class="price-val">14,90</span>
+        <div style="display:flex;flex-direction:column;gap:2px;align-items:flex-start;">
+          <span class="price-offer">Oferta</span>
+          <span class="price-old">$245</span>
+        </div>
+      </div>
+      <span class="price-access">Acceso Vitalicio</span>
+    </div>
+
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="feature-icon">🔥</div>
+        <div>Desafío Completo en la App (21 Días · 4 Fases)</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🌅</div>
+        <div>Protocolo Despertar de 5 Minutos</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🥩</div>
+        <div>Guía Combustible Masculino</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🌙</div>
+        <div>Protocolo Noche Completa</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💬</div>
+        <div>Lo que Ella Nunca te Dirá</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔄</div>
+        <div>Reinicio: Adiós al Porno</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🛡️</div>
+        <div>Garantía de 90 Días</div>
+      </div>
+    </div>
+
+    <a href="https://pay.hotmart.com/T108362405D?off=o99570xb&checkoutMode=10" class="btn-military checkout-btn">Empezar Mi Desafío →</a>
+
+    <div class="ssl-bar">
+      <span><span class="dot"></span>SSL SECURE</span>
+      <span>ACCESO INMEDIATO</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     VS ANÁLISE TÁTICA
+════════════════════════════════════════════ -->
+<section class="vs-sec">
+  <div class="wrap">
+
+    <h2 class="vs-title">EL NOVATO <span class="vs">VS</span> EL VETERANO</h2>
+
+    <div class="vs-rows">
+
+      <div class="vs-row">
+        <div class="vs-cell civil">
+          <span class="vs-label">Novato</span>
+          <span class="vs-text">😞 Se le baja en el momento clave</span>
+        </div>
+        <div class="vs-sep">VS</div>
+        <div class="vs-cell militar">
+          <span class="vs-label">Veterano</span>
+          <span class="vs-text">💪 Firme hasta el final</span>
+        </div>
+      </div>
+
+      <div class="vs-row">
+        <div class="vs-cell civil">
+          <span class="vs-label">Novato</span>
+          <span class="vs-text">💊 Atado a la pastilla azul</span>
+        </div>
+        <div class="vs-sep">VS</div>
+        <div class="vs-cell militar">
+          <span class="vs-label">Veterano</span>
+          <span class="vs-text">🌿 100% natural</span>
+        </div>
+      </div>
+
+      <div class="vs-row">
+        <div class="vs-cell civil">
+          <span class="vs-label">Novato</span>
+          <span class="vs-text">🚽 4-5x al baño por noche</span>
+        </div>
+        <div class="vs-sep">VS</div>
+        <div class="vs-cell militar">
+          <span class="vs-label">Veterano</span>
+          <span class="vs-text">😴 Noche entera durmiendo</span>
+        </div>
+      </div>
+
+      <div class="vs-row">
+        <div class="vs-cell civil">
+          <span class="vs-label">Novato</span>
+          <span class="vs-text">😰 Termina antes que ella</span>
+        </div>
+        <div class="vs-sep">VS</div>
+        <div class="vs-cell militar">
+          <span class="vs-label">Veterano</span>
+          <span class="vs-text">🎯 Decide cuándo terminar</span>
+        </div>
+      </div>
+
+      <div class="vs-row">
+        <div class="vs-cell civil">
+          <span class="vs-label">Novato</span>
+          <span class="vs-text">👨‍⚕️ Consultorio humillante</span>
+        </div>
+        <div class="vs-sep">VS</div>
+        <div class="vs-cell militar">
+          <span class="vs-label">Veterano</span>
+          <span class="vs-text">🏠 En casa, discreto</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     RESULTADOS CONFIRMADOS
+════════════════════════════════════════════ -->
+<section class="results-sec">
+  <div class="wrap">
+
+    <h2 class="results-title">TUS <span>21 DÍAS</span>, FASE POR FASE</h2>
+    <p class="results-sub">4 fases · 21 días · un solo objetivo: <strong style="color:#fff;">reactivar el Músculo Fantasma</strong></p>
+
+    <div class="prog-bar-wrap">
+      <div class="prog-bar-labels">
+        <span>INICIO</span>
+        <span class="g">▸ DESAFÍO ACTIVO</span>
+        <span>META</span>
+      </div>
+      <div class="prog-bar-track">
+        <div class="prog-bar-fill"></div>
+      </div>
+      <div class="prog-bar-ticks">
+        <span>D1</span>
+        <span>D7</span>
+        <span>D14</span>
+        <span>D21</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-phase">
+        <div class="tl-dot">01</div>
+        <div class="tl-header">
+          <span class="tl-phase-tag">▸ FASE 01</span>
+          <span class="tl-days">DÍAS 1 – 5</span>
+        </div>
+        <div class="tl-title"><span class="ico">⚡</span>DESPERTAR</div>
+        <p class="tl-desc">Contracciones rápidas: tu cerebro vuelve a <strong>encontrar</strong> el Músculo Fantasma. Primeras señales: lo sientes responder y vuelve la erección de la mañana.</p>
+        <div class="tl-metrics">
+          <div class="tl-metric">
+            <div class="tl-metric-val">+15%</div>
+            <div class="tl-metric-lbl">Energía</div>
+          </div>
+          <div class="tl-metric">
+            <div class="tl-metric-val">-1</div>
+            <div class="tl-metric-lbl">Baño/noche</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-phase">
+        <div class="tl-dot">02</div>
+        <div class="tl-header">
+          <span class="tl-phase-tag">▸ FASE 02</span>
+          <span class="tl-days">DÍAS 6 – 10</span>
+        </div>
+        <div class="tl-title"><span class="ico">🔥</span>FUERZA</div>
+        <p class="tl-desc">Contracciones sostenidas: el músculo recupera la fuerza para <strong>apretar la salida</strong> — y la sangre se queda adentro. Más firmeza y menos idas al baño en la madrugada.</p>
+        <div class="tl-metrics">
+          <div class="tl-metric">
+            <div class="tl-metric-val">+40%</div>
+            <div class="tl-metric-lbl">Firmeza</div>
+          </div>
+          <div class="tl-metric">
+            <div class="tl-metric-val">6h+</div>
+            <div class="tl-metric-lbl">Sueño</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-phase">
+        <div class="tl-dot">03</div>
+        <div class="tl-header">
+          <span class="tl-phase-tag">▸ FASE 03</span>
+          <span class="tl-days">DÍAS 11 – 15</span>
+        </div>
+        <div class="tl-title"><span class="ico">🎯</span>EL FRENO</div>
+        <p class="tl-desc">Aprendes la señal del límite y el momento exacto de pisar el Freno: el final llega <strong>cuando tú decides</strong>, y no antes.</p>
+        <div class="tl-metrics">
+          <div class="tl-metric">
+            <div class="tl-metric-val">+75%</div>
+            <div class="tl-metric-lbl">Control</div>
+          </div>
+          <div class="tl-metric">
+            <div class="tl-metric-val">8h</div>
+            <div class="tl-metric-lbl">Sueño</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-phase">
+        <div class="tl-dot">04</div>
+        <div class="tl-header">
+          <span class="tl-phase-tag">▸ FASE 04</span>
+          <span class="tl-days">DÍAS 16 – 21</span>
+        </div>
+        <div class="tl-title"><span class="ico">🏆</span>SOLIDIFICACIÓN</div>
+        <p class="tl-desc"><strong>Todo se solidifica.</strong> El Músculo Fantasma se queda activo solo — para que no vuelvas a cero aunque un día no lo hagas. Te miras al espejo y vuelves a ver al hombre de antes.</p>
+        <div class="tl-metrics">
+          <div class="tl-metric">
+            <div class="tl-metric-val">100%</div>
+            <div class="tl-metric-lbl">Confianza</div>
+          </div>
+          <div class="tl-metric">
+            <div class="tl-metric-val">∞</div>
+            <div class="tl-metric-lbl">Autonomía</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="results-disclaimer">* Los resultados individuales pueden variar.</div>
+
+    <!-- REALIDAD ACTUAL -->
+    <div class="reality-box">
+      <div class="reality-title">
+        <span class="x">✕</span>
+        <span>REALIDAD ACTUAL</span>
+      </div>
+      <ul class="reality-list">
+        <li>¿Ya sentiste deseo pero en el momento clave tu cuerpo simplemente <strong>no respondió</strong>?</li>
+        <li>¿Ya intentaste de todo — pastilla, médico, remedio — y el cuerpo <strong>no responde</strong>?</li>
+        <li>¿Estás cansado de despertar 4, 5 veces por noche <strong>sin descansar</strong>?</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     A VERDADE BRUTAL
+════════════════════════════════════════════ -->
+<section class="truth-sec">
+  <div class="wrap">
+    <div class="truth-box">
+      <div class="truth-title">
+        <span class="truth-icon">🔥</span>
+        <span>LA VERDAD BRUTAL</span>
+      </div>
+      <p class="truth-p1">
+        La pastilla empuja la sangre, pero no la sostiene. La mayoría de las soluciones están pensadas para <s>tapar el problema con pastillas</s>.
+      </p>
+      <p class="truth-p2">
+        El Truco del Camerino fue creado para <span class="tag-forjar">REACTIVAR</span> el Músculo Fantasma — el músculo que sostiene la firmeza, frena el final y cuida tu sueño, sin depender de nada externo.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     CENTRO DE COMANDO + APP MOCKUP
+════════════════════════════════════════════ -->
+<section class="command-sec">
+  <div class="wrap">
+
+    <span class="command-tag">Tu Desafío en el Celular</span>
+
+    <h2 class="command-title">
+      TU CONSULTORIO<br>
+      <em>EN TU BOLSILLO</em>
+    </h2>
+
+    <p class="command-desc">
+      Abres la app, haces la sesión del día en pocos minutos y listo. <strong>Mariana te lleva de la mano, día por día</strong> — y por fuera no se nota nada.
+    </p>
+
+    <div class="mockup-area">
+
+      <div class="float-badge badge-top-left">
+        <div class="float-badge-icon">🔥</div>
+        <div class="float-badge-text">
+          <div class="tit">+21</div>
+          <div class="sub">Secuencias</div>
+        </div>
+      </div>
+
+      <div class="float-badge badge-top-right">
+        <div class="float-badge-icon">🎬</div>
+        <div class="float-badge-text">
+          <div class="tit">HD</div>
+          <div class="sub">Videos</div>
+        </div>
+      </div>
+
+      <div class="float-badge badge-bot-left">
+        <div class="float-badge-icon">∞</div>
+        <div class="float-badge-text">
+          <div class="tit">Acceso</div>
+          <div class="sub">Vitalicio</div>
+        </div>
+      </div>
+
+      <div class="float-badge badge-bot-right">
+        <div class="float-badge-icon">🔒</div>
+        <div class="float-badge-text">
+          <div class="tit">100%</div>
+          <div class="sub">Discreto</div>
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="mockup-phone">
+        <div class="mockup-notch"></div>
+        <div class="mockup-screen">
+          <div class="mockup-hdr">
+            <div class="mockup-hdr-name">Bienvenido,<strong>Carlos</strong></div>
+            <div class="mockup-hdr-icon">🔔</div>
+          </div>
+          <div class="mockup-status">▸ FASE 2 · FUERZA</div>
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+            <div>
+              <div class="mockup-metric-lbl">Progreso</div>
+              <div class="mockup-big-num">Día 7/21</div>
+            </div>
+            <div class="mockup-play">▶</div>
+          </div>
+          <div class="mockup-week">
+            <div class="mockup-week-lbl">Tu Semana</div>
+            <div class="mockup-week-days">
+              <div class="mockup-day done">L</div>
+              <div class="mockup-day done">M</div>
+              <div class="mockup-day done">M</div>
+              <div class="mockup-day done">J</div>
+              <div class="mockup-day done">V</div>
+              <div class="mockup-day done">S</div>
+              <div class="mockup-day today">D</div>
+            </div>
+          </div>
+          <div class="mockup-metric-row">
+            <div class="mockup-metric">
+              <div class="mockup-metric-lbl">Minutos</div>
+              <div class="mockup-metric-val">0<span>:40</span></div>
+            </div>
+            <div class="mockup-metric">
+              <div class="mockup-metric-lbl">Secuencias</div>
+              <div class="mockup-metric-val">3<span>/3</span></div>
+            </div>
+          </div>
+          <div class="mockup-mission">
+            <div class="mockup-mission-icon">🔥</div>
+            <div class="mockup-mission-text">
+              <div class="l">Sesión del Día</div>
+              <div class="t">Contracciones Sostenidas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mockup-avail">Disponible para acceso inmediato después de la compra</div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     BONUS SECTION
+════════════════════════════════════════════ -->
+<section class="bonus-sec">
+  <div class="wrap">
+
+    <h2 class="bonus-title">Solo hoy recibes <span>bonos</span></h2>
+
+    <div class="bonus-list">
+
+      <div class="bonus-card">
+        <div class="bonus-card-icon">🌅</div>
+        <h3>Protocolo Despertar de 5 Minutos</h3>
+        <p>La secuencia corta que los veteranos hacen antes de la acción, adaptada para que la hagas apenas te despiertas — y el músculo se quede activo el día entero. Es lo que separa a los hombres que sienten resultados en la primera semana.</p>
+        <div class="bonus-price">
+          <span class="old">$37,00</span>
+          <span class="now">Ahora GRATIS</span>
+        </div>
+      </div>
+
+      <div class="bonus-card">
+        <div class="bonus-card-icon">🥩</div>
+        <h3>Guía Combustible Masculino</h3>
+        <p>El grupo de alimentos que tu cuerpo usa para sostener la firmeza y la circulación — y los que te están saboteando todos los días sin que lo sepas. Exactamente cuáles incluir y cuáles cortar.</p>
+        <div class="bonus-price">
+          <span class="old">$47,00</span>
+          <span class="now">Ahora GRATIS</span>
+        </div>
+      </div>
+
+      <div class="bonus-card">
+        <div class="bonus-card-icon">🌙</div>
+        <h3>Protocolo Noche Completa</h3>
+        <p>Una rutina sencilla para calmar la vejiga y volver a dormir la noche entera, sin levantarte por tres gotitas. Para los hombres que se levantan 3, 4, 5 veces por noche.</p>
+        <div class="bonus-price">
+          <span class="old">$57,00</span>
+          <span class="now">Ahora GRATIS</span>
+        </div>
+      </div>
+
+      <div class="bonus-card">
+        <div class="bonus-card-icon">💬</div>
+        <h3>Lo que Ella Nunca te Dirá</h3>
+        <p>Mariana te lo enseña como mujer: lo que siente una mujer cuando terminas antes que ella, lo que les cuenta a sus amigas y nunca a ti — y por qué ese vibrador escondido en el cajón no tiene nada que ver con el tamaño.</p>
+        <div class="bonus-price">
+          <span class="old">$67,00</span>
+          <span class="now">Ahora GRATIS</span>
+        </div>
+      </div>
+
+      <div class="bonus-card">
+        <div class="bonus-card-icon">🔄</div>
+        <h3>Reinicio: Adiós al Porno</h3>
+        <p>Por qué el porno entrena tu cuerpo para terminar rápido y para necesitar cada vez más estímulo — y cómo reiniciar eso para volver a ponerte duro con una mujer de verdad.</p>
+        <div class="bonus-price">
+          <span class="old">$37,00</span>
+          <span class="now">Ahora GRATIS</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bonus-total">Valor total de los bonos: $245,00 — tuyos hoy sin costo adicional</div>
+
+    <a href="https://pay.hotmart.com/T108362405D?off=o99570xb&checkoutMode=10" class="btn-orange checkout-btn">Asegurar Mis Bonos Ahora</a>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     TESTIMONIOS
+════════════════════════════════════════════ -->
+<section class="testi-sec">
+  <div class="wrap">
+
+    <h2 class="testi-title">Resultados que nos <span>enorgullecen</span></h2>
+    <p class="testi-sub">Mira lo que dicen los hombres que hicieron el desafío</p>
+
+    <div class="testi-list">
+
+      <div class="testi-card">
+        <div class="testi-hdr">
+          <div class="testi-avatar"><img src="../quiz/testi-ricardo.jpg" alt="Ricardo"></div>
+          <div>
+            <div class="testi-name">Ricardo</div>
+            <div class="testi-age">52 años · Ciudad de México</div>
+          </div>
+        </div>
+        <div class="testi-quote-tit">"¡Valió cada centavo!"</div>
+        <p class="testi-text">"Hace tres años no lograba terminar una noche con mi esposa sin sentirme un fracasado. En pocas semanas ella me preguntó, con una sonrisa que no veía hace tiempo, qué había cambiado en mí."</p>
+        <div class="testi-stars">★ ★ ★ ★ ★</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-hdr">
+          <div class="testi-avatar"><img src="../quiz/testi-antonio.jpg" alt="Antonio"></div>
+          <div>
+            <div class="testi-name">Antonio</div>
+            <div class="testi-age">47 años · Bogotá</div>
+          </div>
+        </div>
+        <div class="testi-quote-tit">"¡Increíble y sin pastillas!"</div>
+        <p class="testi-text">"Empecé sin esperar nada. Al tercer día sentí el músculo responder de una manera que no sentía hace años. En la segunda semana pasó por primera vez sin tener que rogar para que saliera bien."</p>
+        <div class="testi-stars">★ ★ ★ ★ ★</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-hdr">
+          <div class="testi-avatar"><img src="../quiz/testi-joaquin.jpg" alt="Joaquín"></div>
+          <div>
+            <div class="testi-name">Joaquín</div>
+            <div class="testi-age">58 años · Lima</div>
+          </div>
+        </div>
+        <div class="testi-quote-tit">"Volví a dormir la noche entera"</div>
+        <p class="testi-text">"Vivía levantándome cuatro, cinco veces por noche. Volví a dormir ocho horas seguidas por primera vez en una década. Y la firmeza que volvió — esa que creía perdida para siempre."</p>
+        <div class="testi-stars">★ ★ ★ ★ ★</div>
+      </div>
+
+    </div>
+
+    <a href="https://pay.hotmart.com/T108362405D?off=o99570xb&checkoutMode=10" class="btn-orange checkout-btn" style="margin-top:24px;">Quiero Empezar Ahora</a>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FAQ
+════════════════════════════════════════════ -->
+<section class="faq-sec">
+  <div class="wrap">
+
+    <h2 class="faq-title">Preguntas Frecuentes</h2>
+
+    <div class="faq-list">
+
+      <details class="faq-item">
+        <summary>¿Necesito equipamiento?</summary>
+        <div class="faq-answer">No. Son contracciones del suelo pélvico: por fuera casi no se mueve nada. Las haces en la oficina, en el carro o acostado en la cama, en pocos minutos, sin que nadie se entere.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Funciona para quien tiene más de 50 o 60 años?</summary>
+        <div class="faq-answer">Sí. El músculo no tiene edad: o tiene comando, o no lo tiene. Y el comando se recupera. Los hombres con resultados más expresivos tienen entre 50 y 65 años.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Cuánto tiempo dura cada secuencia?</summary>
+        <div class="faq-answer">Pocos minutos por día. No es gimnasio, no es sentadilla, no es peso. Son 3 tiempos — contracciones rápidas, sostenidas y el Freno — en el orden correcto que la app te marca cada día.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Es discreto? ¿Mi esposa lo notará?</summary>
+        <div class="faq-answer">Total discreción. La app aparece como cualquier otra en tu celular y los ejercicios no se notan por fuera. Nadie tiene que saberlo — a menos que quieras contar los resultados.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Por qué una mujer me va a enseñar esto?</summary>
+        <div class="faq-answer">Porque Mariana es fisioterapeuta pélvica y ya atendió a más de 5 mil hombres en su consultorio. Conoce tu cuerpo por dentro — y además sabe lo que siente una mujer en la cama y nunca te va a decir.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Y si no siento resultados?</summary>
+        <div class="faq-answer">Tienes 90 días de garantía total. Si haces el desafío y no sientes el músculo despertar, solo envías un mensaje y te devolvemos el 100% de tu dinero. Sin preguntas.</div>
+      </details>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<div class="footer">
+  © 2026 El Truco del Camerino · Mariana Castillo<br>
+  Todos los derechos reservados<br>
+  Este contenido es informativo. Los resultados individuales pueden variar.
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     STICKY BOTTOM BAR
+════════════════════════════════════════════ -->
+<div class="sticky-bar">
+  <div class="sticky-inner">
+    <div class="sticky-alert">Liberamos solo 200 accesos a este precio</div>
+    <div class="sticky-time">Tu acceso queda reservado por: <strong id="cnt-time">08:30</strong></div>
+    <a href="https://pay.hotmart.com/T108362405D?off=o99570xb&checkoutMode=10" class="btn-orange checkout-btn">Empezar Mi Desafío</a>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════ -->
+<script>
+// Countdown
+(function(){
+  var KEY='_sec_afr_exp', TOTAL=510; // 8:30 in seconds
+  function pad(n){return n<10?'0'+n:''+n;}
+  var exp=sessionStorage.getItem(KEY);
+  if(!exp){exp=Date.now()+TOTAL*1000;sessionStorage.setItem(KEY,exp);}
+  else{exp=parseInt(exp);}
+  function tick(){
+    var left=Math.max(0,Math.floor((exp-Date.now())/1000));
+    var m=Math.floor(left/60),s=left%60;
+    var el=document.getElementById('cnt-time');
+    if(el)el.textContent=pad(m)+':'+pad(s);
+    if(left>0)setTimeout(tick,1000);
+  }
+  tick();
+})();
+
+// UTM forwarding to checkout
+(function(){
+  var BASE=(window.OFERTA_CONFIG&&window.OFERTA_CONFIG.CHECKOUT_URL)||'https://pay.hotmart.com/T108362405D?off=o99570xb&checkoutMode=10';
+  var KEYS=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','src','sck','xcod','vtid','fbclid'];
+  var s=new URLSearchParams(window.location.search),p=[];
+  KEYS.forEach(function(k){var v=s.get(k);if(v)p.push(k+'='+encodeURIComponent(v));});
+  var url=p.length?BASE+'&'+p.join('&'):BASE;
+  document.querySelectorAll('.checkout-btn').forEach(function(el){el.href=url;el.addEventListener('click',function(){var icId='ic_'+Date.now();if(typeof fbq==='function'){try{fbq('track','InitiateCheckout',{},{eventID:icId});}catch(e){}}if(typeof window.sendMetaCapi==='function'){window.sendMetaCapi('InitiateCheckout',{},icId);}});});
+})();
+</script>
+
+</body>
+</html>

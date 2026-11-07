@@ -1,0 +1,8 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": true,
+  "rewrites": [
+    { "source": "/front/live", "destination": "/front/index.html" },
+    { "source": "/front/live/", "destination": "/front/index.html" }
+  ]
+}

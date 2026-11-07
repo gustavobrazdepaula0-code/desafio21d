@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>CoreActiva — Protocolo 21 Días</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F9FAFB;
+      --surface: #FFFFFF;
+      --accent: #0EA5E9;
+      --accent-dark: #0284C7;
+      --accent-light: #E0F2FE;
+      --text: #1F2937;
+      --text-secondary: #6B7280;
+      --text-light: #9CA3AF;
+      --border: #E5E7EB;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: var(--bg);
+      position: relative;
+      padding-bottom: 80px;
+    }
+
+    /* ─── TOP HEADER ─── */
+    .top-header {
+      background: var(--surface);
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: var(--shadow);
+    }
+
+    .top-header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-dark);
+      letter-spacing: -0.3px;
+    }
+
+    .top-header p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+
+    /* ─── SECTIONS ─── */
+    .section { display: none; padding: 16px 16px 8px; }
+    .section.active { display: block; }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .card h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-wrap { margin: 10px 0 4px; }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .progress-bar {
+      height: 8px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    /* ─── BADGE ─── */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .badge-blue { background: var(--accent-light); color: var(--accent-dark); }
+    .badge-green { background: #D1FAE5; color: #065F46; }
+    .badge-yellow { background: #FEF3C7; color: #92400E; }
+    .badge-gray { background: #F3F4F6; color: var(--text-secondary); }
+
+    /* ─── BUTTON ─── */
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: inherit;
+      width: 100%;
+      text-align: center;
+    }
+    .btn:active { background: var(--accent-dark); }
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+    }
+    .btn-outline:active { background: var(--accent-light); }
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: 13px;
+      width: auto;
+    }
+
+    /* ─── TIP CARD ─── */
+    .tip-card {
+      background: linear-gradient(135deg, #E0F2FE, #BAE6FD);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .tip-card .tip-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .tip-card p {
+      font-size: 14px;
+      color: #075985;
+      line-height: 1.5;
+    }
+
+    /* ─── SECTION TITLE ─── */
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .section-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    /* ─── WEEK BLOCK (Programa) ─── */
+    .week-block {
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+    .week-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .week-header .week-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .week-header .week-info { flex: 1; }
+    .week-header .week-info h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .week-header .week-info p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+    .week-arrow {
+      font-size: 14px;
+      color: var(--text-light);
+      transition: transform 0.25s;
+    }
+    .week-block.open .week-arrow { transform: rotate(90deg); }
+
+    .week-body {
+      display: none;
+      padding: 0 16px 14px;
+      background: var(--surface);
+    }
+    .week-block.open .week-body { display: block; }
+
+    .day-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .day-item:last-child { border-bottom: none; }
+    .day-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .day-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .day-info p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* ─── EXERCISE CARD ─── */
+    .exercise-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .exercise-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .exercise-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .exercise-meta { flex: 1; }
+    .exercise-meta h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .exercise-meta .meta-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 5px;
+      flex-wrap: wrap;
+    }
+    .exercise-toggle {
+      font-size: 14px;
+      color: var(--text-light);
+      transition: transform 0.25s;
+    }
+    .exercise-card.open .exercise-toggle { transform: rotate(90deg); }
+
+    .exercise-body {
+      display: none;
+      padding: 0 16px 16px;
+      border-top: 1px solid var(--border);
+    }
+    .exercise-card.open .exercise-body { display: block; }
+
+    .exercise-body p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .exercise-body h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      margin-top: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .steps-list {
+      list-style: none;
+      counter-reset: steps;
+    }
+    .steps-list li {
+      counter-increment: steps;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .steps-list li::before {
+      content: counter(steps);
+      min-width: 22px;
+      height: 22px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .muscles-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .benefit-list {
+      list-style: none;
+    }
+    .benefit-list li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+    .benefit-list li::before {
+      content: "✓";
+      color: var(--success);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ─── NUTRICIÓN ─── */
+    .nutri-section { margin-bottom: 20px; }
+    .nutri-section h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent-light);
+    }
+
+    .nutri-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+      box-shadow: var(--shadow);
+    }
+    .nutri-icon {
+      font-size: 26px;
+      width: 40px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .nutri-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .nutri-info p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .meal-plan {
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .meal-row {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .meal-row:last-child { border-bottom: none; }
+    .meal-row h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-dark);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .meal-row p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-item {
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .faq-question {
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+    }
+    .faq-question .faq-arrow {
+      font-size: 14px;
+      color: var(--text-light);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-arrow { transform: rotate(90deg); }
+
+    .faq-answer {
+      display: none;
+      padding: 0 16px 14px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      border-top: 1px solid var(--border);
+    }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-answer p { margin-bottom: 6px; }
+    .faq-answer p:last-child { margin-bottom: 0; }
+
+    /* ─── DISCLAIMER ─── */
+    .disclaimer {
+      background: #FEF9C3;
+      border: 1px solid #FCD34D;
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 12px;
+      color: #78350F;
+      line-height: 1.5;
+      margin: 16px 0 8px;
+    }
+    .disclaimer strong { font-weight: 700; }
+
+    /* ─── BOTTOM NAV ─── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      z-index: 100;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+    }
+
+    .nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 4px 10px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      transition: color 0.2s;
+      color: var(--text-light);
+      gap: 3px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-btn .nav-icon { font-size: 20px; line-height: 1; }
+    .nav-btn .nav-label { font-size: 10px; font-weight: 500; letter-spacing: 0.2px; }
+    .nav-btn.active { color: var(--accent); }
+    .nav-btn.active .nav-icon { transform: scale(1.1); }
+
+    /* ─── PROFILE HEADER (Inicio) ─── */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .profile-info h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .profile-info p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ─── BENEFIT GRID ─── */
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .benefit-cell {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      text-align: center;
+    }
+    .benefit-cell .b-icon { font-size: 24px; margin-bottom: 6px; }
+    .benefit-cell p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ─── ANATOMY BOX ─── */
+    .anatomy-box {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-top: 10px;
+    }
+    .anatomy-box h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .anatomy-box p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ─── TODAY EXERCISE CARD ─── */
+    .today-exercise {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .today-exercise .ex-icon {
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+    .today-exercise .ex-info h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .today-exercise .ex-info p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    /* ─── STATS ROW ─── */
+    .stats-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .stat-cell {
+      flex: 1;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .stat-cell .stat-number {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-cell .stat-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    /* ─── CATEGORY LABEL ─── */
+    .cat-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin: 20px 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cat-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── SCROLL HELPERS ─── */
+    html { scroll-behavior: smooth; }
+
+    /* ─── LOADING SCREEN ─── */
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      gap: 12px;
+    }
+    #loading h2 { font-size: 22px; font-weight: 700; color: var(--accent-dark); }
+    #loading p { font-size: 13px; color: var(--text-secondary); }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--accent-light);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<!-- Loading -->
+<div id="loading">
+  <div style="font-size:44px">🧘</div>
+  <h2>CoreActiva</h2>
+  <p>Cargando tu programa...</p>
+  <div class="spinner"></div>
+</div>
+
+<div id="app">
+
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <h1>CoreActiva</h1>
+    <p>Protocolo 21 Días — Suelo Pélvico</p>
+  </header>
+
+  <!-- ════════════════════════════════════════
+       SECCIÓN 1: INICIO
+  ════════════════════════════════════════ -->
+  <section id="sec-inicio" class="section active">
+
+    <!-- Perfil -->
+    <div class="profile-header" style="margin-top:6px;">
+      <div class="avatar">🧘</div>
+      <div class="profile-info">
+        <h2>¡Bienvenido!</h2>
+        <p>Tu entrenamiento de hoy te espera</p>
+      </div>
+    </div>
+
+    <!-- Stats rápidas -->
+    <div class="stats-row">
+      <div class="stat-cell">
+        <div class="stat-number" id="stat-day">1</div>
+        <div class="stat-label">Día actual</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">21</div>
+        <div class="stat-label">Días totales</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Ejercicios</div>
+      </div>
+    </div>
+
+    <!-- Progreso -->
+    <div class="card">
+      <div class="card-title">Tu progreso hoy</div>
+      <h2 id="progress-title">Día 1 de 21</h2>
+      <p style="margin-bottom:10px;">Cada día cuenta. La constancia es la clave del cambio.</p>
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Inicio</span>
+          <span id="progress-pct">5%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width:5%;"></div>
+        </div>
+      </div>
+      <p style="font-size:12px; color:var(--text-light); margin-top:8px;">Semana 1 — Fase de Fundamentos</p>
+    </div>
+
+    <!-- Ejercicio del día -->
+    <div class="card">
+      <div class="card-title">Ejercicio de hoy</div>
+      <div class="today-exercise">
+        <div class="ex-icon">💪</div>
+        <div class="ex-info">
+          <h3>Kegel Básico</h3>
+          <p>Contracción de 4 segundos, relajación de 2 segundos. 10 repeticiones. Enfoque en la activación consciente del músculo pubococcígeo.</p>
+          <button class="btn btn-sm" onclick="navTo('ejercicios')">Ver ejercicio</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consejo del día -->
+    <div class="tip-card" id="tip-card">
+      <div class="tip-label">💡 Consejo del día</div>
+      <p id="tip-text">Cargando...</p>
+    </div>
+
+    <!-- Por qué el suelo pélvico -->
+    <div class="card">
+      <div class="card-title">¿Por qué el suelo pélvico?</div>
+      <h2 style="font-size:15px; margin-bottom:8px;">La base de tu salud integral</h2>
+      <p style="margin-bottom:10px;">
+        El suelo pélvico es un conjunto de músculos, ligamentos y tejidos que forman el "piso" de la pelvis. Sostiene la vejiga, el intestino y, en el caso de personas con útero, también este órgano. Cumple funciones esenciales en la micción, la defecación, la postura y la estabilidad del core.
+      </p>
+
+      <div class="anatomy-box">
+        <h4>Anatomía básica</h4>
+        <p>
+          El músculo principal es el <strong>pubococcígeo</strong>, parte del grupo muscular llamado <em>levantador del ano</em>. Se extiende desde el hueso púbico hasta el cóccix, formando un soporte en forma de hamaca. Su capacidad de contracción y relajación voluntaria es lo que se entrena con los ejercicios de este protocolo.
+        </p>
+      </div>
+
+      <div class="anatomy-box" style="margin-top:8px;">
+        <h4>¿Por qué puede debilitarse?</h4>
+        <p>
+          Factores como el sedentarismo, la postura incorrecta, el sobrepeso, el envejecimiento o períodos de inactividad prolongada pueden reducir el tono muscular pélvico. El entrenamiento regular ayuda a mantener y recuperar esta función de forma gradual.
+        </p>
+      </div>
+    </div>
+
+    <!-- Beneficios -->
+    <div class="card">
+      <div class="card-title">Beneficios del entrenamiento pélvico</div>
+      <div class="benefit-grid">
+        <div class="benefit-cell">
+          <div class="b-icon">🚿</div>
+          <p>Mejora del control vesical</p>
+        </div>
+        <div class="benefit-cell">
+          <div class="b-icon">🦴</div>
+          <p>Reducción del dolor lumbar</p>
+        </div>
+        <div class="benefit-cell">
+          <div class="b-icon">🧍</div>
+          <p>Mejora postural general</p>
+        </div>
+        <div class="benefit-cell">
+          <div class="b-icon">⚡</div>
+          <p>Estabilidad del core</p>
+        </div>
+        <div class="benefit-cell">
+          <div class="b-icon">🫁</div>
+          <p>Mejor coordinación respiratoria</p>
+        </div>
+        <div class="benefit-cell">
+          <div class="b-icon">🧠</div>
+          <p>Mayor conciencia corporal</p>
+        </div>
+      </div>
+      <p style="margin-top:12px; font-size:13px; color:var(--text-secondary);">
+        Los beneficios son graduales y se consolidan con la práctica constante. La mayoría de las personas reportan mejoras en 4 a 12 semanas de entrenamiento regular.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECCIÓN 2: PROGRAMA
+  ════════════════════════════════════════ -->
+  <section id="sec-programa" class="section">
+
+    <p class="section-title" style="margin-top:6px;">Programa de 21 Días</p>
+    <p class="section-subtitle">Un protocolo estructurado por fases para desarrollar el tono muscular pélvico de forma progresiva y segura.</p>
+
+    <!-- Intro -->
+    <div class="card">
+      <div class="card-title">¿Cómo funciona?</div>
+      <h2 style="font-size:15px; margin-bottom:8px;">Progresión en 3 semanas</h2>
+      <p>
+        Este protocolo está diseñado en tres fases de siete días. Cada semana introduce estímulos nuevos que permiten que el organismo se adapte de forma gradual. No es necesario tener experiencia previa.
+      </p>
+      <div class="divider"></div>
+      <ul class="benefit-list">
+        <li>Sesiones de 10 a 20 minutos por día</li>
+        <li>Sin equipamiento — solo el propio cuerpo</li>
+        <li>Puede realizarse en cualquier posición cómoda</li>
+        <li>Compatible con otras rutinas de actividad física</li>
+        <li>Resultados graduales con práctica constante</li>
+      </ul>
+    </div>
+
+    <!-- Semana 1 -->
+    <div class="week-block open" style="background:var(--surface);">
+      <div class="week-header" onclick="toggleWeek(this)">
+        <div class="week-icon" style="background:#DBEAFE;">🌱</div>
+        <div class="week-info">
+          <h3>Semana 1 — Fundamentos</h3>
+          <p>Días 1 al 7 · Conciencia corporal y activación básica</p>
+        </div>
+        <span class="week-arrow">▶</span>
+      </div>
+      <div class="week-body">
+        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:10px;">
+          El objetivo de esta semana es aprender a identificar y activar el suelo pélvico de forma aislada. Muchas personas nunca han prestado atención consciente a esta zona, por lo que la prioridad es la conciencia, no la intensidad.
+        </p>
+
+        <div class="day-item">
+          <div class="day-number">1</div>
+          <div class="day-info">
+            <h4>Respiración diafragmática</h4>
+            <p>Conoce el ciclo respiratorio y su relación con el piso pélvico. 10 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">2</div>
+          <div class="day-info">
+            <h4>Kegel básico (primera sesión)</h4>
+            <p>Identificación del músculo pubococcígeo. 10 repeticiones de 4s. 10 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">3</div>
+          <div class="day-info">
+            <h4>Kegel básico + respiración</h4>
+            <p>Coordinación entre contracción pélvica y exhalación. 15 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">4</div>
+          <div class="day-info">
+            <h4>Kegel rápido (flutter)</h4>
+            <p>Primera exposición a contracciones de velocidad corta. 20 repeticiones. 10 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">5</div>
+          <div class="day-info">
+            <h4>Puente de glúteos básico</h4>
+            <p>Ejercicio complementario para activar glúteo mayor y lumbar. 3 series de 8. 15 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">6</div>
+          <div class="day-info">
+            <h4>Kegel básico + Puente</h4>
+            <p>Primera sesión combinada. Integración de movimientos. 20 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">7</div>
+          <div class="day-info">
+            <h4>Día de revisión y movilidad</h4>
+            <p>Repaso de la semana. Estiramiento de cadera y figura cuatro. 15 min.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semana 2 -->
+    <div class="week-block" style="background:var(--surface);">
+      <div class="week-header" onclick="toggleWeek(this)">
+        <div class="week-icon" style="background:#D1FAE5;">🌿</div>
+        <div class="week-info">
+          <h3>Semana 2 — Progresión</h3>
+          <p>Días 8 al 14 · Intensidad y ejercicios complementarios</p>
+        </div>
+        <span class="week-arrow">▶</span>
+      </div>
+      <div class="week-body">
+        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:10px;">
+          Con la base de la semana anterior, se introducen estímulos de mayor duración e intensidad. Los ejercicios complementarios amplifican el trabajo pélvico al involucrar grupos musculares adyacentes.
+        </p>
+
+        <div class="day-item">
+          <div class="day-number">8</div>
+          <div class="day-info">
+            <h4>Kegel sostenido (10 segundos)</h4>
+            <p>Primer trabajo de resistencia muscular. 5 repeticiones. 15 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">9</div>
+          <div class="day-info">
+            <h4>Sentadilla pélvica</h4>
+            <p>Movimiento funcional que activa glúteo, cuádriceps y suelo pélvico. 3 x 10. 15 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">10</div>
+          <div class="day-info">
+            <h4>Kegel rápido + sostenido (alternado)</h4>
+            <p>Trabajo de velocidad y resistencia en la misma sesión. 20 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">11</div>
+          <div class="day-info">
+            <h4>Postura del jinete + elevación lateral</h4>
+            <p>Estabilidad de cadera y aductores. Conexión con el core profundo. 20 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">12</div>
+          <div class="day-info">
+            <h4>Puente de glúteos con pulso</h4>
+            <p>Variación del puente con pequeñas elevaciones sostenidas. 3 x 12. 15 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">13</div>
+          <div class="day-info">
+            <h4>Sesión completa de Kegel (básico + rápido + sostenido)</h4>
+            <p>Protocolo combinado de 3 variantes. 20 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">14</div>
+          <div class="day-info">
+            <h4>Día de movilidad y estiramiento</h4>
+            <p>Estiramiento de cadera frontal, rodilla al pecho, figura cuatro. 15 min.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semana 3 -->
+    <div class="week-block" style="background:var(--surface);">
+      <div class="week-header" onclick="toggleWeek(this)">
+        <div class="week-icon" style="background:#FEF3C7;">🌳</div>
+        <div class="week-info">
+          <h3>Semana 3 — Integración</h3>
+          <p>Días 15 al 21 · Rutina completa y hábitos sostenibles</p>
+        </div>
+        <span class="week-arrow">▶</span>
+      </div>
+      <div class="week-body">
+        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:10px;">
+          La última semana consolida todo lo aprendido. El foco está en crear un hábito sostenible más allá del protocolo de 21 días, integrando los ejercicios en la vida diaria.
+        </p>
+
+        <div class="day-item">
+          <div class="day-number">15</div>
+          <div class="day-info">
+            <h4>Rutina completa (primera vez)</h4>
+            <p>Kegel básico + puente + sentadilla pélvica + estiramiento. 25 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">16</div>
+          <div class="day-info">
+            <h4>Kegel sostenido avanzado (15 segundos)</h4>
+            <p>Mayor demanda de resistencia muscular. 5 repeticiones con descanso de 8s. 20 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">17</div>
+          <div class="day-info">
+            <h4>Sentadilla + postura del jinete + pedaleo</h4>
+            <p>Circuito de ejercicios complementarios. 2 rondas. 25 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">18</div>
+          <div class="day-info">
+            <h4>Rutina completa + respiración coordinada</h4>
+            <p>Integración total de todos los elementos del protocolo. 25 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">19</div>
+          <div class="day-info">
+            <h4>Protocolo de mantenimiento</h4>
+            <p>Diseño de una rutina semanal para continuar después de los 21 días. 20 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">20</div>
+          <div class="day-info">
+            <h4>Sesión libre — repetir el día favorito</h4>
+            <p>Escoge la sesión que más disfrutaste y repítela. Refuerzo del hábito. 20 min.</p>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-number">21</div>
+          <div class="day-info">
+            <h4>🎯 Rutina final y cierre del protocolo</h4>
+            <p>Rutina completa. Reflexión sobre los cambios percibidos. Planificación de hábitos futuros.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Nota clínica:</strong> La progresión de este programa es orientativa. Si en algún momento sentís molestia, detené el ejercicio y consultá con un profesional de salud antes de continuar.
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECCIÓN 3: EJERCICIOS
+  ════════════════════════════════════════ -->
+  <section id="sec-ejercicios" class="section">
+
+    <p class="section-title" style="margin-top:6px;">Biblioteca de Ejercicios</p>
+    <p class="section-subtitle">Tocá cada tarjeta para ver la descripción completa, el paso a paso y los músculos involucrados.</p>
+
+    <div class="cat-label">Suelo pélvico</div>
+
+    <!-- KEGEL BÁSICO -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">💪</div>
+        <div class="exercise-meta">
+          <h3>Kegel Básico</h3>
+          <div class="meta-row">
+            <span class="badge badge-green">Básico</span>
+            <span class="badge badge-gray">⏱ 10 min</span>
+            <span class="badge badge-blue">10 rep.</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          El ejercicio Kegel básico consiste en la contracción voluntaria y controlada del músculo pubococcígeo, seguida de una relajación completa. Es el pilar fundamental de todo programa de entrenamiento del suelo pélvico y el punto de partida para cualquier nivel de condición física.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Adoptá una posición cómoda — acostado, sentado o de pie. Asegurate de que los músculos de glúteos, abdomen y muslos estén relajados.</li>
+          <li>Identificá el músculo del suelo pélvico: es el mismo que usarías para detener el flujo de orina a mitad de camino.</li>
+          <li>Contraé lentamente ese músculo hacia adentro y hacia arriba. La contracción debe ser suave, no brusca.</li>
+          <li>Mantené la contracción durante 4 segundos, respirando normalmente. No aguantes la respiración.</li>
+          <li>Relajá completamente durante 2 segundos. La relajación es tan importante como la contracción.</li>
+          <li>Repetí 10 veces. Eso es una serie.</li>
+          <li>Descansá 1 minuto y realizá 2 series más si es posible.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Pubococcígeo</span>
+          <span class="badge badge-blue">Iliococcígeo</span>
+          <span class="badge badge-blue">Músculo del esfínter</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Mejora del tono muscular del suelo pélvico</li>
+          <li>Mayor control sobre la vejiga</li>
+          <li>Contribuye a la estabilidad lumbopélvica</li>
+          <li>Base para ejercicios más avanzados</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- KEGEL RÁPIDO -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">⚡</div>
+        <div class="exercise-meta">
+          <h3>Kegel Rápido (Flutter)</h3>
+          <div class="meta-row">
+            <span class="badge badge-yellow">Intermedio</span>
+            <span class="badge badge-gray">⏱ 8 min</span>
+            <span class="badge badge-blue">20 rep.</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          El Kegel rápido, también conocido como "flutter", trabaja la velocidad de respuesta del músculo pélvico. En lugar de contracciones prolongadas, se realizan contracciones breves y rítmicas que estimulan las fibras musculares de contracción rápida. Es complementario al Kegel básico.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Adoptá una posición cómoda con la musculatura de glúteos y abdomen relajada.</li>
+          <li>Contraé el suelo pélvico rápidamente durante 1 segundo.</li>
+          <li>Relajá completamente durante 1 segundo.</li>
+          <li>Repetí esta secuencia rítmica 20 veces sin pausar.</li>
+          <li>Descansá 30 segundos entre series.</li>
+          <li>Realizá 2 a 3 series por sesión.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Pubococcígeo</span>
+          <span class="badge badge-blue">Fibras de contracción rápida</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Mejora la velocidad de respuesta muscular ante esfuerzos (tos, estornudo)</li>
+          <li>Complementa el trabajo de resistencia del Kegel básico</li>
+          <li>Aumenta la coordinación neuromuscular pélvica</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- KEGEL SOSTENIDO -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">🏋️</div>
+        <div class="exercise-meta">
+          <h3>Kegel Sostenido</h3>
+          <div class="meta-row">
+            <span class="badge badge-yellow">Intermedio</span>
+            <span class="badge badge-gray">⏱ 10 min</span>
+            <span class="badge badge-blue">5 rep.</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          El Kegel sostenido exige una contracción mantenida durante un período más largo (entre 10 y 15 segundos). Este tipo de trabajo desarrolla la resistencia de las fibras musculares de contracción lenta, que son las responsables del tono basal del suelo pélvico.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Adoptá una posición cómoda. Relajá glúteos, abdomen y muslos.</li>
+          <li>Contraé el músculo pélvico de forma gradual, como si lo "elevaras" en varios pisos.</li>
+          <li>Mantené la contracción máxima durante 10 segundos. Respirá con normalidad.</li>
+          <li>Relajá lentamente durante 5 segundos, también de forma escalonada.</li>
+          <li>Repetí 5 veces. Descansá 2 minutos entre series.</li>
+          <li>Cuando esta duración se vuelva cómoda, avanzá a 12-15 segundos de contracción.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Pubococcígeo</span>
+          <span class="badge badge-blue">Iliococcígeo</span>
+          <span class="badge badge-blue">Fibras de contracción lenta</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Desarrolla la resistencia muscular del suelo pélvico</li>
+          <li>Mejora el tono en reposo</li>
+          <li>Contribuye a la continencia urinaria en esfuerzos prolongados</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RESPIRACIÓN DIAFRAGMÁTICA -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">🫁</div>
+        <div class="exercise-meta">
+          <h3>Respiración Diafragmática</h3>
+          <div class="meta-row">
+            <span class="badge badge-green">Básico</span>
+            <span class="badge badge-gray">⏱ 8 min</span>
+            <span class="badge badge-blue">Fundamento</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          La respiración diafragmática es la base de todo el protocolo. El diafragma y el suelo pélvico funcionan de forma sinérgica: cuando inhalás, el diafragma desciende y el suelo pélvico se relaja ligeramente; cuando exhalás, el diafragma sube y el suelo pélvico se eleva. Aprender esta coordinación es fundamental antes de progresar con cualquier otro ejercicio.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Acostáte boca arriba con las rodillas dobladas, pies en el suelo. Colocá una mano en el pecho y otra en el abdomen.</li>
+          <li>Inhalá lentamente por la nariz durante 4 segundos. El abdomen debe elevarse; el pecho debe moverse lo menos posible.</li>
+          <li>Mantené el aire 2 segundos.</li>
+          <li>Exhalá lentamente por la boca durante 6 segundos. Notá cómo el abdomen desciende.</li>
+          <li>Al exhalar, realizá una contracción suave del suelo pélvico hacia arriba.</li>
+          <li>Al inhalar, relajá completamente el suelo pélvico.</li>
+          <li>Repetí este ciclo 10 veces.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Diafragma</span>
+          <span class="badge badge-blue">Suelo pélvico</span>
+          <span class="badge badge-blue">Transverso abdominal</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Activa el sistema nervioso parasimpático (relajación)</li>
+          <li>Coordina el suelo pélvico con el movimiento respiratorio</li>
+          <li>Reduce la tensión del core y la zona lumbar</li>
+          <li>Mejora la oxigenación y el rendimiento general</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cat-label">Ejercicios complementarios</div>
+
+    <!-- PUENTE DE GLÚTEOS -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">🌉</div>
+        <div class="exercise-meta">
+          <h3>Puente de Glúteos</h3>
+          <div class="meta-row">
+            <span class="badge badge-green">Básico</span>
+            <span class="badge badge-gray">⏱ 12 min</span>
+            <span class="badge badge-blue">3 x 10</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          El puente de glúteos es uno de los ejercicios más eficaces para trabajar el suelo pélvico de forma indirecta. Al elevar las caderas desde el suelo, se activa el glúteo mayor, los isquiotibiales y, por la presión que ejerce la posición sobre la pelvis, también el músculo pélvico.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Acostáte boca arriba. Doblá las rodillas a 90° con los pies planos en el suelo, separados al ancho de la cadera.</li>
+          <li>Colocá los brazos a los lados del cuerpo, palmas hacia abajo.</li>
+          <li>Inhalá. Al exhalar, contraé el suelo pélvico y elevá lentamente las caderas hasta que el cuerpo forme una línea recta desde hombros hasta rodillas.</li>
+          <li>Mantené la posición 2 segundos en la cima, apretando los glúteos.</li>
+          <li>Bajá lentamente vértebra por vértebra durante 3 segundos.</li>
+          <li>Realizá 10 repeticiones. Descansá 60 segundos entre series. 3 series en total.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Glúteo mayor</span>
+          <span class="badge badge-blue">Isquiotibiales</span>
+          <span class="badge badge-blue">Suelo pélvico</span>
+          <span class="badge badge-blue">Lumbar</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Fortalece glúteos y musculatura posterior de la pierna</li>
+          <li>Activa el suelo pélvico de forma funcional</li>
+          <li>Mejora la postura y reduce el dolor lumbar</li>
+          <li>Ejercicio de bajo impacto, apto para todos los niveles</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SENTADILLA PÉLVICA -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">🦵</div>
+        <div class="exercise-meta">
+          <h3>Sentadilla Pélvica</h3>
+          <div class="meta-row">
+            <span class="badge badge-yellow">Intermedio</span>
+            <span class="badge badge-gray">⏱ 15 min</span>
+            <span class="badge badge-blue">3 x 10</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          La sentadilla pélvica es una adaptación de la sentadilla convencional con énfasis en la activación consciente del suelo pélvico durante el movimiento. Es un ejercicio funcional que integra el trabajo pélvico con el movimiento cotidiano de ponerse de pie y sentarse.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Ponéte de pie con los pies separados al ancho de los hombros. Las puntas de los pies ligeramente hacia afuera.</li>
+          <li>Inhalá mientras bajás la cadera hacia atrás y hacia abajo, como si fueras a sentarte en una silla. Relajá el suelo pélvico durante el descenso.</li>
+          <li>Bajá hasta que los muslos estén paralelos al suelo (o hasta donde sea cómodo).</li>
+          <li>Al exhalar y subir, contraé suavemente el suelo pélvico mientras extendés las piernas.</li>
+          <li>Completá el movimiento de pie, sin trabar las rodillas.</li>
+          <li>10 repeticiones por serie. 3 series.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Cuádriceps</span>
+          <span class="badge badge-blue">Glúteos</span>
+          <span class="badge badge-blue">Suelo pélvico</span>
+          <span class="badge badge-blue">Core</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Integra el suelo pélvico en movimientos funcionales</li>
+          <li>Fortalece miembros inferiores y glúteos</li>
+          <li>Mejora el equilibrio y la coordinación</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- POSTURA DEL JINETE -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">🐎</div>
+        <div class="exercise-meta">
+          <h3>Postura del Jinete</h3>
+          <div class="meta-row">
+            <span class="badge badge-green">Básico</span>
+            <span class="badge badge-gray">⏱ 10 min</span>
+            <span class="badge badge-blue">Estático</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          La postura del jinete es un ejercicio isométrico que activa los aductores de la cadera y el suelo pélvico de forma simultánea. Imita la posición de montar a caballo y es especialmente útil para desarrollar conciencia de la zona media pélvica.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Ponéte de pie con los pies más anchos que los hombros. Las rodillas semiflexionadas.</li>
+          <li>Bajá ligeramente la cadera, manteniendo el torso erecto y la espalda neutral.</li>
+          <li>Colocá las manos en los muslos. Contraé los aductores (como si quisieras juntar los pies sin moverlos).</li>
+          <li>Al mismo tiempo, realizá una contracción suave del suelo pélvico.</li>
+          <li>Mantené 10 segundos respirando normalmente.</li>
+          <li>Relajá 5 segundos. Repetí 8 veces.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Aductores</span>
+          <span class="badge badge-blue">Suelo pélvico</span>
+          <span class="badge badge-blue">Glúteo medio</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Activa la cadena interna de la cadera</li>
+          <li>Estabiliza la articulación coxofemoral</li>
+          <li>Puede realizarse en cualquier lugar, sin equipamiento</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ELEVACIÓN LATERAL -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">🦋</div>
+        <div class="exercise-meta">
+          <h3>Elevación de Pierna Lateral</h3>
+          <div class="meta-row">
+            <span class="badge badge-green">Básico</span>
+            <span class="badge badge-gray">⏱ 10 min</span>
+            <span class="badge badge-blue">3 x 12</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          La elevación lateral de pierna trabaja el glúteo medio, que cumple una función estabilizadora clave para la pelvis. Un glúteo medio fuerte contribuye a mantener la alineación de la cadera y reduce la carga sobre el suelo pélvico.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Acostáte de lado con las piernas extendidas, una sobre la otra. Apoyá la cabeza en el brazo inferior.</li>
+          <li>Contraé el abdomen para estabilizar el core.</li>
+          <li>Elevá la pierna superior lentamente hasta unos 45°, manteniendo la rodilla extendida y el pie en flexión.</li>
+          <li>Bajá lentamente sin llegar a apoyar completamente la pierna.</li>
+          <li>12 repeticiones por lado. 3 series.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Glúteo medio</span>
+          <span class="badge badge-blue">Tensor de la fascia lata</span>
+          <span class="badge badge-blue">Abductores</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Estabiliza la pelvis durante la marcha</li>
+          <li>Previene el valgismo de rodilla</li>
+          <li>Complementa el trabajo pélvico directo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cat-label">Estiramientos</div>
+
+    <!-- ESTIRAMIENTO CADERA FRONTAL -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">🧘</div>
+        <div class="exercise-meta">
+          <h3>Estiramiento de Cadera Frontal</h3>
+          <div class="meta-row">
+            <span class="badge badge-green">Básico</span>
+            <span class="badge badge-gray">⏱ 5 min</span>
+            <span class="badge badge-blue">30s cada lado</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          El flexor de cadera tenso es una de las causas más comunes de disfunción pélvica. Este estiramiento alivia la tensión del iliopsoas y mejora la movilidad de la articulación coxofemoral, facilitando la correcta activación del suelo pélvico.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Arrodilláte con una rodilla en el suelo y la otra pierna al frente con la rodilla a 90°.</li>
+          <li>Llevá la cadera hacia adelante lentamente hasta sentir tensión en la parte frontal del muslo de la pierna trasera.</li>
+          <li>Mantené la espalda recta, sin arquear la zona lumbar.</li>
+          <li>Sostené la posición 30 segundos. Respirá profundo y relajá la zona.</li>
+          <li>Cambiá de lado. Repetí 2 veces por lado.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Iliopsoas</span>
+          <span class="badge badge-blue">Recto femoral</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Libera la tensión anterior de la cadera</li>
+          <li>Mejora la postura y la alineación pélvica</li>
+          <li>Facilita la activación eficiente del suelo pélvico</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RODILLA AL PECHO -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">🔄</div>
+        <div class="exercise-meta">
+          <h3>Rodilla al Pecho</h3>
+          <div class="meta-row">
+            <span class="badge badge-green">Básico</span>
+            <span class="badge badge-gray">⏱ 5 min</span>
+            <span class="badge badge-blue">30s cada lado</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          El estiramiento de rodilla al pecho alivia la tensión de la zona glútea y lumbar, zonas estrechamente relacionadas con el suelo pélvico. Es ideal como cierre de cualquier sesión de ejercicios.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Acostáte boca arriba con las piernas extendidas.</li>
+          <li>Doblá una rodilla y llevála suavemente hacia el pecho con ambas manos.</li>
+          <li>Mantené la espalda plana contra el suelo. No fuerces el movimiento.</li>
+          <li>Sostené 30 segundos. Respirá profundamente y relajáte en cada exhalación.</li>
+          <li>Cambiá de pierna. Luego hacé la variante con ambas rodillas a la vez.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Glúteo mayor</span>
+          <span class="badge badge-blue">Piriformis</span>
+          <span class="badge badge-blue">Lumbar</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Alivia la tensión glútea y lumbar</li>
+          <li>Mejora la movilidad de la cadera</li>
+          <li>Ideal para recuperación post-ejercicio</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FIGURA CUATRO -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">4️⃣</div>
+        <div class="exercise-meta">
+          <h3>Figura Cuatro</h3>
+          <div class="meta-row">
+            <span class="badge badge-green">Básico</span>
+            <span class="badge badge-gray">⏱ 5 min</span>
+            <span class="badge badge-blue">45s cada lado</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          La figura cuatro estira el músculo piriformis, que se ubica profundo en la zona glútea y tiene una relación directa con el suelo pélvico. La tensión excesiva en este músculo puede interferir con la correcta activación pélvica.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Acostáte boca arriba con las rodillas dobladas.</li>
+          <li>Cruzá el tobillo derecho sobre el muslo izquierdo, justo por encima de la rodilla, formando la forma de un "4".</li>
+          <li>Entrelazá las manos detrás del muslo izquierdo y llevá ambas piernas suavemente hacia el pecho.</li>
+          <li>Sentirás el estiramiento en el glúteo de la pierna cruzada (derecha).</li>
+          <li>Sostené 45 segundos. Cambí de lado.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Piriformis</span>
+          <span class="badge badge-blue">Glúteo mediano</span>
+          <span class="badge badge-blue">Rotadores externos de cadera</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Libera tensión en la cadera profunda</li>
+          <li>Mejora la rotación externa de cadera</li>
+          <li>Reduce la presión sobre el nervio ciático</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PEDALEO EN EL AIRE -->
+    <div class="exercise-card">
+      <div class="exercise-header" onclick="toggleExercise(this)">
+        <div class="exercise-icon">🚴</div>
+        <div class="exercise-meta">
+          <h3>Pedaleo en el Aire</h3>
+          <div class="meta-row">
+            <span class="badge badge-green">Básico</span>
+            <span class="badge badge-gray">⏱ 5 min</span>
+            <span class="badge badge-blue">2 x 30s</span>
+          </div>
+        </div>
+        <span class="exercise-toggle">▶</span>
+      </div>
+      <div class="exercise-body">
+        <p>
+          El pedaleo en el aire es un ejercicio suave de movilidad activa que activa la circulación pélvica y abdominal, mejora la coordinación del core y sirve como movilización articular para la cadera. Es ideal como ejercicio de calentamiento o de vuelta a la calma.
+        </p>
+        <h4>Cómo hacerlo</h4>
+        <ol class="steps-list">
+          <li>Acostáte boca arriba. Elevá las piernas a 90°.</li>
+          <li>Comenzá a realizar un movimiento circular con las piernas, imitando el pedaleo de una bicicleta.</li>
+          <li>El movimiento debe ser fluido y controlado, sin tensar el cuello ni la zona lumbar.</li>
+          <li>Realizá 30 segundos hacia adelante. Descansá 15 segundos. Luego 30 segundos hacia atrás.</li>
+          <li>Mantené el abdomen ligeramente contraído durante todo el ejercicio.</li>
+        </ol>
+        <h4>Músculos trabajados</h4>
+        <div class="muscles-row">
+          <span class="badge badge-blue">Psoas</span>
+          <span class="badge badge-blue">Cuádriceps</span>
+          <span class="badge badge-blue">Core profundo</span>
+          <span class="badge badge-blue">Flexores de cadera</span>
+        </div>
+        <h4>Beneficios</h4>
+        <ul class="benefit-list">
+          <li>Mejora la circulación en la zona pélvica y abdominal</li>
+          <li>Moviliza la cadera de forma suave</li>
+          <li>Activa el core sin impacto</li>
+          <li>Ideal para calentamiento o cierre de sesión</li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECCIÓN 4: NUTRICIÓN
+  ════════════════════════════════════════ -->
+  <section id="sec-nutricion" class="section">
+
+    <p class="section-title" style="margin-top:6px;">Nutrición y Salud Pélvica</p>
+    <p class="section-subtitle">La alimentación influye directamente en la función muscular, la inflamación y la salud del tejido conectivo. Conocé qué incluir en tu dieta.</p>
+
+    <!-- Alimentos recomendados -->
+    <div class="nutri-section">
+      <h3>🌿 Alimentos recomendados</h3>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">🥦</div>
+        <div class="nutri-info">
+          <h4>Zinc — función muscular</h4>
+          <p>El zinc interviene en la síntesis proteica y la recuperación muscular. Fuentes: semillas de calabaza, carne magra, legumbres (lentejas, garbanzos), mariscos y frutos secos.</p>
+        </div>
+      </div>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">🥬</div>
+        <div class="nutri-info">
+          <h4>Magnesio — relajación muscular</h4>
+          <p>El magnesio regula la contracción y relajación muscular. Su déficit puede generar tensión excesiva en el suelo pélvico. Fuentes: espinaca, almendras, banana, semillas de chía, cacao puro.</p>
+        </div>
+      </div>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">🐟</div>
+        <div class="nutri-info">
+          <h4>Vitamina D — función neuromuscular</h4>
+          <p>La vitamina D participa en la transmisión nerviosa y el control muscular. La deficiencia se asocia a debilidad pélvica. Fuentes: exposición solar moderada (15-20 min/día), salmón, caballa, huevos, sardinas.</p>
+        </div>
+      </div>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">🫐</div>
+        <div class="nutri-info">
+          <h4>Antioxidantes — reducción de inflamación</h4>
+          <p>Los antioxidantes protegen el tejido muscular del estrés oxidativo. Fuentes: frutas rojas (arándanos, frutillas), vegetales de colores vivos (morrones, zanahoria, brócoli), té verde, cúrcuma.</p>
+        </div>
+      </div>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">🌾</div>
+        <div class="nutri-info">
+          <h4>Fibra — prevención del estreñimiento</h4>
+          <p>El estreñimiento aumenta la presión sobre el suelo pélvico durante la defecación. Una dieta rica en fibra previene este esfuerzo. Fuentes: legumbres, cereales integrales, verduras, frutas con piel.</p>
+        </div>
+      </div>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">🫘</div>
+        <div class="nutri-info">
+          <h4>Proteínas de calidad</h4>
+          <p>El tejido muscular necesita aminoácidos para su mantenimiento y recuperación. Priorizá fuentes magras: pollo, pavo, huevos, legumbres, tofu, queso fresco bajo en grasa.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidratación -->
+    <div class="nutri-section">
+      <h3>💧 Hidratación</h3>
+
+      <div class="card">
+        <h2 style="font-size:15px; margin-bottom:8px;">¿Cuánto tomar?</h2>
+        <p>
+          La recomendación general es de 1,5 a 2 litros de agua al día, aunque las necesidades varían según la actividad física, el clima y el peso corporal. Para la salud pélvica, la hidratación adecuada mantiene la vejiga funcionando correctamente y evita que la orina se concentre demasiado, lo que puede irritar la mucosa vesical.
+        </p>
+      </div>
+
+      <div class="tip-card" style="margin-top:0;">
+        <div class="tip-label">⚠️ Error común</div>
+        <p>Reducir la ingesta de líquidos para "controlar mejor" la vejiga es contraproducente. La orina concentrada irrita la pared vesical y puede aumentar la urgencia. La solución es entrenar el músculo, no restringir el agua.</p>
+      </div>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">🫖</div>
+        <div class="nutri-info">
+          <h4>Infusiones sin cafeína</h4>
+          <p>El té de manzanilla, la menta y el jengibre son alternativas hidratantes que no irritan la vejiga. Ideales para complementar la ingesta de agua.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- A moderar -->
+    <div class="nutri-section">
+      <h3>⚠️ Alimentos a moderar</h3>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">☕</div>
+        <div class="nutri-info">
+          <h4>Cafeína</h4>
+          <p>La cafeína tiene efecto diurético y puede estimular la contracción de la vejiga. No es necesario eliminarlo, pero moderá el consumo a 1-2 tazas al día, especialmente si notás urgencia frecuente.</p>
+        </div>
+      </div>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">🍺</div>
+        <div class="nutri-info">
+          <h4>Alcohol</h4>
+          <p>El alcohol afecta el control neuromuscular y actúa como diurético. Consumos elevados pueden interferir con la coordinación del suelo pélvico y la función vesical.</p>
+        </div>
+      </div>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">🍟</div>
+        <div class="nutri-info">
+          <h4>Alimentos ultraprocesados</h4>
+          <p>El alto contenido de sodio, aditivos y grasas trans de los ultraprocesados favorece la inflamación sistémica, que puede afectar la respuesta muscular y la recuperación del tejido pélvico.</p>
+        </div>
+      </div>
+
+      <div class="nutri-item">
+        <div class="nutri-icon">🌶️</div>
+        <div class="nutri-info">
+          <h4>Picante y cítricos en exceso</h4>
+          <p>Para personas con vejiga hiperactiva, los alimentos muy ácidos o picantes pueden actuar como irritantes de la mucosa vesical. Observá tu respuesta individual y ajustá según sea necesario.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan de alimentación sugerido -->
+    <div class="nutri-section">
+      <h3>🍽️ Plan de alimentación sugerido</h3>
+      <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;">
+        Ejemplo de un día con enfoque en la salud pélvica y muscular. Adaptalo a tus preferencias y condiciones personales.
+      </p>
+
+      <div class="meal-plan">
+        <div class="meal-row">
+          <h4>☀️ Desayuno</h4>
+          <p>Avena cocida con banana y semillas de chía. Infusión de jengibre sin azúcar. Huevo revuelto con espinaca (opcional).</p>
+        </div>
+        <div class="meal-row">
+          <h4>🌞 Almuerzo</h4>
+          <p>Pechuga de pollo a la plancha con ensalada de rúcula, morrones, zanahoria rallada y aceite de oliva. Arroz integral o legumbres. Vaso de agua con limón.</p>
+        </div>
+        <div class="meal-row">
+          <h4>🌤️ Merienda</h4>
+          <p>Puñado de almendras y nueces. Fruta de estación (arándanos, frutillas o manzana). Yogur natural sin azúcar.</p>
+        </div>
+        <div class="meal-row">
+          <h4>🌙 Cena</h4>
+          <p>Salmón al horno con brócoli al vapor y batata. O lentejas guisadas con verduras de estación. Infusión de manzanilla.</p>
+        </div>
+        <div class="meal-row">
+          <h4>💧 Hidratación durante el día</h4>
+          <p>Mínimo 6-8 vasos de agua. Repartidos a lo largo del día, sin concentrar el consumo en pocas horas.</p>
+        </div>
+      </div>
+
+      <div class="disclaimer" style="margin-top:12px;">
+        <strong>Recordatorio:</strong> Este plan es orientativo e informativo. Si tenés alguna condición de salud o seguís una dieta específica, consultá con un profesional de nutrición.
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECCIÓN 5: AYUDA / FAQ
+  ════════════════════════════════════════ -->
+  <section id="sec-ayuda" class="section">
+
+    <p class="section-title" style="margin-top:6px;">Preguntas Frecuentes</p>
+    <p class="section-subtitle">Encontrá respuestas a las dudas más comunes sobre el entrenamiento del suelo pélvico.</p>
+
+    <!-- FAQ 1 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        ¿Qué es el suelo pélvico?
+        <span class="faq-arrow">▶</span>
+      </div>
+      <div class="faq-answer">
+        <p>El suelo pélvico es un grupo de músculos, ligamentos y tejido conectivo que forma la base de la cavidad pélvica. Se extiende desde el hueso púbico en la parte frontal hasta el cóccix en la parte posterior, y de un isquion al otro en sentido lateral.</p>
+        <p>Su función principal es sostener los órganos pélvicos (vejiga, intestino y, según la anatomía, el útero), contribuir al control de la micción y la defecación, y estabilizar la columna lumbar y la pelvis durante el movimiento.</p>
+        <p>El músculo principal es el <strong>pubococcígeo</strong>, parte del complejo llamado elevador del ano. Es el que se ejercita con los Kegel.</p>
+      </div>
+    </div>
+
+    <!-- FAQ 2 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        ¿Cuándo voy a ver resultados?
+        <span class="faq-arrow">▶</span>
+      </div>
+      <div class="faq-answer">
+        <p>Los cambios son graduales y dependen de factores individuales como el tono muscular de base, la constancia con el entrenamiento y el estado general de salud.</p>
+        <p>Estudios clínicos sugieren que mejoras perceptibles en el control muscular y la función pélvica pueden observarse entre las <strong>4 y 12 semanas</strong> de práctica constante.</p>
+        <p>Lo más importante es no interrumpir el entrenamiento. Los resultados se construyen con regularidad, no con intensidad extrema.</p>
+      </div>
+    </div>
+
+    <!-- FAQ 3 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        ¿Puedo hacer los ejercicios en cualquier momento?
+        <span class="faq-arrow">▶</span>
+      </div>
+      <div class="faq-answer">
+        <p>Sí. Los ejercicios de suelo pélvico (especialmente los Kegel) pueden hacerse en prácticamente cualquier posición y en cualquier momento: acostado, sentado, de pie, en el transporte público o en el trabajo.</p>
+        <p>Lo ideal es establecer un horario fijo para crear el hábito. Muchas personas los hacen al levantarse, antes de dormir o durante pausas del trabajo.</p>
+        <p>Evitá hacer Kegel mientras estás orinando de forma habitual — puede usarse puntualmente para identificar el músculo, pero no como práctica regular, ya que puede interferir con el vaciado vesical.</p>
+      </div>
+    </div>
+
+    <!-- FAQ 4 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        ¿Hay contraindicaciones?
+        <span class="faq-arrow">▶</span>
+      </div>
+      <div class="faq-answer">
+        <p>Los ejercicios de suelo pélvico son generalmente seguros para la mayoría de las personas. Sin embargo, hay situaciones en las que es importante consultar primero con un profesional de salud:</p>
+        <p>• Dolor pélvico crónico o agudo<br>• Post-operatorio reciente en la zona pélvica o abdominal<br>• Embarazo o período inmediato post-parto<br>• Hipertonía del suelo pélvico (tensión excesiva) — en este caso, los Kegel podrían no ser lo más adecuado</p>
+        <p>Si tenés alguna duda sobre tu situación particular, siempre es recomendable consultar con un fisioterapeuta especializado en suelo pélvico.</p>
+      </div>
+    </div>
+
+    <!-- FAQ 5 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        ¿Con qué frecuencia debo hacer los ejercicios?
+        <span class="faq-arrow">▶</span>
+      </div>
+      <div class="faq-answer">
+        <p>La recomendación estándar es realizar ejercicios de suelo pélvico <strong>todos los días</strong>, con al menos una sesión diaria de 10 a 15 minutos.</p>
+        <p>El protocolo CoreActiva propone una sesión diaria durante 21 días para establecer el hábito. Luego del programa, se sugiere mantener la práctica 3-5 veces por semana como mantenimiento.</p>
+        <p>Como cualquier músculo, el suelo pélvico también necesita descanso. No es necesario hacer múltiples sesiones largas en el mismo día.</p>
+      </div>
+    </div>
+
+    <!-- FAQ 6 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        ¿Qué pasa si siento molestia durante el ejercicio?
+        <span class="faq-arrow">▶</span>
+      </div>
+      <div class="faq-answer">
+        <p>Si sentís dolor, presión inusual o cualquier molestia durante la práctica, detené el ejercicio inmediatamente. Una ligera sensación de fatiga muscular es normal, pero el dolor no lo es.</p>
+        <p>Las causas más comunes de molestia son: estar contrayendo músculos incorrectos (glúteos, abdomen o muslos en lugar del suelo pélvico), hacer demasiadas repeticiones desde el inicio, o un posible estado de hipertonía del suelo pélvico.</p>
+        <p>Ante dudas, consultá con un profesional de salud o un fisioterapeuta de suelo pélvico.</p>
+      </div>
+    </div>
+
+    <!-- FAQ 7 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        ¿Necesito equipamiento especial?
+        <span class="faq-arrow">▶</span>
+      </div>
+      <div class="faq-answer">
+        <p>No. Todos los ejercicios de este protocolo pueden realizarse sin ningún tipo de equipamiento. Solo necesitás un espacio cómodo y, para algunos ejercicios del suelo, una colchoneta o alfombra.</p>
+        <p>Existen dispositivos de biofeedback pélvico (sensores internos que miden la contracción) que pueden ser útiles como complemento, especialmente si tenés dificultad para identificar el músculo correcto. Sin embargo, no son necesarios para completar este protocolo.</p>
+      </div>
+    </div>
+
+    <!-- FAQ 8 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        ¿Puedo combinar con otros ejercicios o deporte?
+        <span class="faq-arrow">▶</span>
+      </div>
+      <div class="faq-answer">
+        <p>Sí, y es recomendable. El entrenamiento del suelo pélvico es compatible con cualquier actividad física. De hecho, se recomienda especialmente a personas que practican deportes de alto impacto (running, crossfit, salto) porque estos ejercicios ponen mayor demanda sobre el suelo pélvico.</p>
+        <p>Lo más conveniente es realizar los Kegel separados del entrenamiento principal (por ejemplo, a la mañana y el deporte a la tarde), para no fatigar el músculo antes de actividades que requieran su función.</p>
+      </div>
+    </div>
+
+    <!-- FAQ 9 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        ¿Cuál es la diferencia entre Kegel básico y Kegel avanzado?
+        <span class="faq-arrow">▶</span>
+      </div>
+      <div class="faq-answer">
+        <p>El <strong>Kegel básico</strong> trabaja con contracciones de 4 segundos y descansos de 2 segundos. Es el punto de partida y permite aprender a aislar correctamente el músculo pélvico.</p>
+        <p>Los niveles más avanzados incluyen:</p>
+        <p>• <strong>Kegel sostenido</strong>: contracciones de 10-15 segundos, que desarrollan la resistencia muscular (fibras de contracción lenta)<br>• <strong>Kegel rápido (flutter)</strong>: contracciones de 1 segundo, que mejoran la velocidad de respuesta (fibras de contracción rápida)<br>• <strong>Kegel escalonado</strong>: contracción en varias "intensidades" (como un elevador), para mayor control motor</p>
+        <p>Un programa completo incluye los tres tipos para desarrollar tanto la resistencia como la velocidad y la coordinación del músculo pélvico.</p>
+      </div>
+    </div>
+
+    <!-- FAQ 10 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        ¿Este programa reemplaza la consulta médica?
+        <span class="faq-arrow">▶</span>
+      </div>
+      <div class="faq-answer">
+        <p><strong>No.</strong> CoreActiva es un programa de educación y entrenamiento físico de carácter informativo. No es un diagnóstico, un tratamiento médico ni reemplaza la evaluación de un profesional de salud.</p>
+        <p>Si experimentás síntomas como incontinencia urinaria o fecal, dolor pélvico persistente, presión o pesadez en la zona pélvica, o cualquier otro síntoma que te preocupe, consultá con tu médico o un fisioterapeuta especializado en suelo pélvico.</p>
+        <p>Este programa es un complemento de hábitos saludables, no un tratamiento clínico.</p>
+      </div>
+    </div>
+
+    <!-- Disclaimer legal -->
+    <div class="disclaimer">
+      <strong>Aviso legal:</strong> Este programa es de carácter educativo e informativo. No reemplaza la consulta con un profesional de salud. Si experimentás síntomas, consultá con tu médico o fisioterapeuta especializado en suelo pélvico.
+    </div>
+
+    <!-- Contacto / créditos -->
+    <div class="card" style="text-align:center; margin-top:4px;">
+      <div style="font-size:32px; margin-bottom:8px;">🧘</div>
+      <h2 style="font-size:15px; margin-bottom:4px;">CoreActiva</h2>
+      <p style="font-size:12px;">Protocolo 21 Días — Suelo Pélvico<br>Programa de entrenamiento educativo</p>
+      <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
+        <p style="font-size:11px; color:var(--text-light);">v1.0 · Contenido de carácter informativo<br>© 2024 CoreActiva. Todos los derechos reservados.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" onclick="navTo('inicio')">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Inicio</span>
+    </button>
+    <button class="nav-btn" onclick="navTo('programa')">
+      <span class="nav-icon">📅</span>
+      <span class="nav-label">Programa</span>
+    </button>
+    <button class="nav-btn" onclick="navTo('ejercicios')">
+      <span class="nav-icon">💪</span>
+      <span class="nav-label">Ejercicios</span>
+    </button>
+    <button class="nav-btn" onclick="navTo('nutricion')">
+      <span class="nav-icon">🥦</span>
+      <span class="nav-label">Nutrición</span>
+    </button>
+    <button class="nav-btn" onclick="navTo('ayuda')">
+      <span class="nav-icon">❓</span>
+      <span class="nav-label">Ayuda</span>
+    </button>
+  </nav>
+
+</div><!-- #app -->
+
+<script>
+  // ─── TIPS ROTATIVOS ───────────────────────────────────────
+  const tips = [
+    "Hidratarse bien es clave para la salud vesical. Tomá al menos 6-8 vasos de agua al día distribuidos a lo largo de la jornada.",
+    "La postura al sentarse influye en el suelo pélvico. Evitá cruzar las piernas por períodos prolongados y apoyá ambos pies en el suelo.",
+    "Los alimentos ricos en magnesio (almendras, espinaca, banana) ayudan a la relajación muscular, incluido el suelo pélvico.",
+    "Antes de toser, estornudar o levantar algo pesado, contraé suavemente el suelo pélvico. Este hábito protege el músculo del esfuerzo brusco.",
+    "El estreñimiento aumenta la presión sobre el suelo pélvico. Incorporá fibra en cada comida y mantené una buena hidratación.",
+    "La respiración diafragmática coordina naturalmente con el suelo pélvico. Practicala 5 minutos al día para mejorar la conciencia corporal.",
+    "Reducir el consumo de cafeína puede disminuir la urgencia urinaria. Probá alternar con infusiones de manzanilla o jengibre."
+  ];
+
+  // ─── ESTADO (localStorage) ────────────────────────────────
+  const DAY_KEY = "ca_day";
+  let currentDay = parseInt(localStorage.getItem(DAY_KEY) || "1");
+  if (currentDay < 1) currentDay = 1;
+  if (currentDay > 21) currentDay = 21;
+
+  function initApp() {
+    // Tip del día
+    const tipIndex = Math.floor(Date.now() / 86400000) % tips.length;
+    document.getElementById("tip-text").textContent = tips[tipIndex];
+
+    // Progreso
+    const pct = Math.round((currentDay / 21) * 100);
+    document.getElementById("progress-title").textContent = `Día ${currentDay} de 21`;
+    document.getElementById("progress-pct").textContent = pct + "%";
+    document.getElementById("progress-fill").style.width = pct + "%";
+    document.getElementById("stat-day").textContent = currentDay;
+
+    // Ocultar loading
+    setTimeout(() => {
+      const loading = document.getElementById("loading");
+      loading.style.opacity = "0";
+      loading.style.transition = "opacity 0.4s";
+      setTimeout(() => loading.style.display = "none", 400);
+    }, 900);
+  }
+
+  // ─── NAVEGACIÓN ───────────────────────────────────────────
+  function navTo(tab) {
+    // Esconder todas las secciones
+    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+    // Mostrar la correcta
+    document.getElementById("sec-" + tab).classList.add("active");
+
+    // Actualizar nav
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    event.currentTarget.classList.add("active");
+
+    // Scroll al top
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // ─── ACORDEÓN SEMANAS ──────────────────────────────────────
+  function toggleWeek(header) {
+    const block = header.parentElement;
+    block.classList.toggle("open");
+  }
+
+  // ─── EJERCICIOS EXPANDIBLES ───────────────────────────────
+  function toggleExercise(header) {
+    const card = header.parentElement;
+    // Cerrar otros abiertos
+    document.querySelectorAll(".exercise-card.open").forEach(c => {
+      if (c !== card) c.classList.remove("open");
+    });
+    card.classList.toggle("open");
+    if (card.classList.contains("open")) {
+      setTimeout(() => {
+        card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 50);
+    }
+  }
+
+  // ─── FAQ ACORDEÓN ──────────────────────────────────────────
+  function toggleFAQ(question) {
+    const item = question.parentElement;
+    // Cerrar otros
+    document.querySelectorAll(".faq-item.open").forEach(i => {
+      if (i !== item) i.classList.remove("open");
+    });
+    item.classList.toggle("open");
+  }
+
+  // ─── INIT ──────────────────────────────────────────────────
+  window.addEventListener("DOMContentLoaded", initApp);
+</script>
+
+</body>
+</html>
